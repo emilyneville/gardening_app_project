@@ -1,0 +1,12 @@
+[
+    {
+      "name": "Watermelon",
+      "category": "melon",
+      "image_url":"https://www.gardeningknowhow.com/wp-content/uploads/2021/05/whole-and-slices-watermelon-400x300.jpg"
+    },
+    {
+      "name": "Zucchini",
+      "category": "squash",
+      "image_url":"https://www.ufseeds.com/dw/image/v2/BFKV_PRD/on/demandware.static/-/Sites-master-urbanfarmer/default/dw24616637/images/products/Dark-Green-Zucchini.jpg"
+      }
+]
