@@ -1,6 +1,13 @@
+import json
 import requests
-import time
+from random import randint
+from time import sleep
 from bs4 import BeautifulSoup
+
+##TODO 
+    # get the image URLs and rerun 
+    # figure out why not all of them are going at the same time
+
 
 headers = requests.utils.default_headers()
 headers.update({
@@ -10,12 +17,12 @@ headers.update({
 def find_all_veg_pages():
 ## to find all the veg pages
 ## FYI approx 1.1k objects, so assume 15 pages
-##https://www.ufseeds.com/vegetables?sz=72&start=72
+## https://www.ufseeds.com/vegetables?sz=72&start=72
     veg_dict = {}
     page_num = 1
     product_num = 0
 
-    while page_num <= 1: 
+    while page_num <= 15: 
         product_page = requests.get(f"https://www.ufseeds.com/vegetables?start={product_num}&sz=72")
         product_page_src = product_page.content
         product_soup = BeautifulSoup(product_page_src, 'lxml')
@@ -27,9 +34,19 @@ def find_all_veg_pages():
                 veg_dict[link_name] = {"id":product_num, "link":cleaned_link }
                 product_num+=1
         page_num+=1
+        sleep(randint(2,10))
 
     print(len(veg_dict))
+    # veg_urls = []
 
+    # for key, value in veg_dict.items():
+    #     name = key
+    #     link = value["link"]
+    #     veg_urls.append(link)
+
+    # df = pd.DataFrame(veg_urls)
+    # df.to_csv (r'veg_dict_urls.csv', index = False, header=False)
+    # return print(f'updated veg_dict_urls.csv with {len(veg_dict)} records')
     return(veg_dict)
 
 all_the_veg = find_all_veg_pages()
@@ -74,11 +91,17 @@ for key, value in all_the_veg.items():
             except Exception:
                 pass
 
-print(all_the_veg)
+    sleep(randint(2,15))
+
+# print(all_the_veg)
+with open('data.json', 'w') as fp:
+    json.dump(all_the_veg, fp,  indent=4)
+
+print("**** your data is readyyyyy ****")
 
 #### SANDBOX ####
 
-# result = requests.get("https://www.ufseeds.com/vegetables")
+# result = requests.get("https://wwwcle.ufseeds.com/vegetables")
 # print(result.status_code)
 # src = result.content
 # # print(src)
