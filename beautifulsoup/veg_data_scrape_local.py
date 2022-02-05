@@ -13,7 +13,7 @@ veg_dict = {}
 for filename in os.scandir(directory):
     if filename.is_file():
         with open(filename.path) as f:
-            soup = BeautifulSoup(f.read(), 'lxml')
+            soup = BeautifulSoup(re.sub("<!--|-->","",f.read()), 'lxml')
         name_str = str(soup.find("h1", {"class": "product-name"}).text.strip()).replace(" ", "_")
         name_r = re.findall(r"\w", name_str)
         name_id = "".join(name_r).lower()
@@ -41,22 +41,27 @@ for filename in os.scandir(directory):
             veg_dict[name_id][attribute_label] = attribute_value
 
         ## Grab the 2nd set of dimensions from the product page
-        growing_instructions = ["Before Planting:","Planting:",
+        growing_instructions = ["Before Planting: ","Planting:",
                                 "Watering:","Fertilizer:","Days to Maturity:",
                                 "Harvesting:","Tips:","AVG. Direct Seeding Rate:"] 
 
         for blurb in growing_instructions:
-                try:
-                    blurb_data = soup.find("strong", text=blurb).next_sibling
-                    instruction_label = blurb
-                    instruction_value = blurb_data.strip()
+            strong_items=soup.findAll("strong")
+            for item in strong_items:
+                if item.text.strip() == blurb.strip():
+                    instruction_label = item.text.strip()
+                    instruction_value = item.next_sibling.strip()
                     veg_dict[name_id][instruction_label] = instruction_value
-                except Exception:
-                    pass
+
+            ## Can't figure out why this stopped working... 
+            # blurb_data = soup.find("strong", text=blurb).next_sibling
+            # instruction_label = blurb
+            # instruction_value = blurb_data.strip()
+            # veg_dict[name_id][instruction_label] = instruction_value
         product_id_counter += 1
 
 print(" **** THE DATA IS DONE ****")
 
-# # print(veg_dict)
+# print(veg_dict)
 with open('/home/hackbright/src/project/data/veg_data.json', 'w') as fp:
     json.dump(veg_dict, fp,  indent=4)

@@ -13,7 +13,7 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
-    zone = db.Column(db.String)
+    zone = db.Column(db.Integer)
     created_date = db.Column(db.DateTime)
     last_modified_date = db.Column(db.DateTime)
 
@@ -30,8 +30,26 @@ class Plant(db.Model):
     name = db.Column(db.String)
     category = db.Column(db.Text)
     image_url = db.Column(db.Text)
-    # dim1 = db.Column(db.String)
-    # dim2 = db.Column(db.String)
+    short_descr = db.Column(db.String)
+    botanical_name = db.Column(db.String)
+    seed_type = db.Column(db.String)
+    fruit_color = db.Column(db.String)
+    breed = db.Column(db.String)
+    maturity = db.Column(db.String)
+    life_cycle = db.Column(db.String)
+    sow_method = db.Column(db.String)
+    fruit_weight_oz = db.Column(db.Float)
+    days_to_maturity = db.Column(db.Integer)
+    row_spacing_in = db.Column(db.Float)
+    sow_depth_in = db.Column(db.Float)
+    plant_spacing_in = db.Column(db.Float)
+    before_planting = db.Column(db.String)
+    planting = db.Column(db.String)
+    watering = db.Column(db.String)
+    days_to_maturity_text = db.Column(db.String)
+    harvesting = db.Column(db.String)
+    tips = db.Column(db.String)
+
     created_date = db.Column(db.DateTime)
     last_modified_date = db.Column(db.DateTime)
 
@@ -61,6 +79,7 @@ class Zone(db.Model):
     __tablename__ = "zone"
 
     zone_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    zone =  db.Column(db.Integer)
     created_date = db.Column(db.DateTime)
 
     def __repr__(self):
@@ -73,7 +92,7 @@ class PlantZone(db.Model):
 
     plant_zone_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     plant_id = db.Column(db.Integer, db.ForeignKey("plants.plant_id"))
-    zone_id = db.Column(db.Integer, db.ForeignKey("zones.zone_id"))
+    zone_id = db.Column(db.Integer, db.ForeignKey("zones.zone_id"), nullable=True)
     created_date = db.Column(db.DateTime)
 
     plant = db.relationship("Plant", backref="plant_zones")

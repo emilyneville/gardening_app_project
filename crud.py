@@ -5,13 +5,13 @@ from datetime import datetime
 
 
 ## TODO update the create user intake params
-def create_user(email, password):
+def create_user(email, password, zone=None):
     """Create and return a new user."""
 
     user = User(
         email=email, 
         password=password, 
-        zone="dummy variable", 
+        zone=zone, 
         created_date = datetime.now(), 
         last_modified_date = datetime.now()
         )
