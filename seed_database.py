@@ -52,3 +52,19 @@ for plant, plant_attributes in plant_data.items():
 model.db.session.add_all(plants_in_db)
 model.db.session.commit()
 
+
+# Create 10 users; each user will make 10 ratings
+for n in range(10):
+    email = f"user{n}@test.com"
+    password = "test"
+
+    user = crud.create_user(email, password)
+    model.db.session.add(user)
+
+    for _ in range(10):
+        random_plant = choice(plants_in_db)
+
+        favorite = crud.create_favorite(user, random_plant)
+        model.db.session.add(favorite)
+
+model.db.session.commit()
