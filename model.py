@@ -76,7 +76,7 @@ class PlantFavorite(db.Model):
 class Zone(db.Model):
     """A List of possible zones"""
 
-    __tablename__ = "zone"
+    __tablename__ = "zones"
 
     zone_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     zone =  db.Column(db.Integer)
@@ -91,8 +91,8 @@ class PlantZone(db.Model):
     __tablename__ = "plant_zones"
 
     plant_zone_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    plant_id = db.Column(db.Integer, db.ForeignKey("plants.plant_id"))
-    zone_id = db.Column(db.Integer, db.ForeignKey("zones.zone_id"), nullable=True)
+    plant_id = db.Column(db.Integer, db.ForeignKey("plants.plant_id"), nullable=False)
+    zone_id = db.Column(db.Integer, db.ForeignKey("zones.zone_id"), nullable=False)
     created_date = db.Column(db.DateTime)
 
     plant = db.relationship("Plant", backref="plant_zones")
@@ -112,7 +112,7 @@ class UserGantt(db.Model):
     created_date = db.Column(db.DateTime)
     last_modified_date = db.Column(db.DateTime)
 
-    user = db.relationship("User", backref="plant_favorites")
+    user = db.relationship("User", backref="user_gantts")
 
     def __repr__(self):
         return f"<UserGantt user_gantt_id={self.user_gantt_id} gantt_name= {self.gantt_name}>"
