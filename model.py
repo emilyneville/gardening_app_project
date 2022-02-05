@@ -71,7 +71,7 @@ class PlantFavorite(db.Model):
     user = db.relationship("User", backref="plant_favorites")
 
     def __repr__(self):
-        return f"<Favorite favorite_plant_id={self.favorite_plant_id}>"
+        return f"<Favorite favorite_plant_id={self.favorite_plant_id} plant_id={self.lant_id} user_id={self.user}  >"
 
 class Zone(db.Model):
     """A List of possible zones"""

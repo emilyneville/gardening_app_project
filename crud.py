@@ -4,7 +4,10 @@ from model import db, User, Plant, PlantFavorite, connect_to_db
 from datetime import datetime
 
 
-## TODO update the create user intake params
+#################
+##### users #####
+#################
+
 def create_user(email, password, zone=None):
     """Create and return a new user."""
 
@@ -18,7 +21,117 @@ def create_user(email, password, zone=None):
 
     return user
 
+def get_users():
+    """Return all users."""
 
+    return User.query.all()
+
+
+def get_user_by_id(user_id):
+    """Return a user by primary key."""
+
+    return User.query.get(user_id)
+
+
+def get_user_by_email(email):
+    """Return a user by email."""
+
+    return User.query.filter(User.email == email).first()
+
+
+##################
+##### plants #####
+##################
+
+def create_plant(name, category, image_url=None):
+    """Create and return a new plant."""
+    plant = Plant(
+    name=name,
+    category=category,
+    image_url=image_url,
+    created_date=datetime.now(),
+    last_modified_date=datetime.now()
+    )
+    return plant
+
+
+def get_plants():
+    """Return all plants."""
+
+    return Plant.query.all()
+
+
+def get_plant_by_id(plant_id):
+    """Return a plant by primary key."""
+
+    return Plant.query.get(plant_id)
+
+
+#####################
+##### favorites #####
+#####################
+
+def create_favorite(user, plant):
+    """Create and return a new favorite plant."""
+
+    favorite = PlantFavorite(user=user, plant=plant, created_date=datetime.now())
+
+    return favorite
+
+## delete favorite?
+def delete_favorite(user_plant):
+
+    deleted_favorite = print("Add in a delete command to delete this favorite!")
+
+    return deleted_favorite
+
+###################
+##### gantts ######
+###################
+
+def create_user_gantt(user_id, gantt_name):
+    """Create and return a new gantt cahart."""
+    user_gantt = UserGantt(
+    user_id=user_id,
+    gantt_name=gantt_name,
+    created_date=datetime.now(),
+    last_modified_date=datetime.now()
+    )
+    return user_gantt
+
+def create_user_gantt_plant(user_gantt_id, plant_id, display_name, start_date, end_date):
+    """Create and return a new plant as a line in the gantt chart."""
+    user_gantt_plant = UserGanttPlant(
+    user_gantt_id=user_gantt_id,
+    plant_id=plant_id,
+    display_name=display_name,
+    start_date=start_date,
+    end_date=end_date, 
+    created_date=datetime.now(),
+    last_modified_date=datetime.now()
+    )
+    return user_gantt_plant
+
+##################
+##### zones ######
+##################
+
+def create_zone(zone):
+    """Create and return a new plant."""
+    zone = Zone(
+    zone=zone,
+    created_date=datetime.now()
+    )
+    return zone
+
+def create_plant_zone(plant_id, zone_id):
+    """Create and return a new plant."""
+    plant_zone = PlantZone(
+    plant_id=plant_id,
+    zone_id=zone_id,
+    created_date=datetime.now()
+    )
+    return plant_zone
 
 if __name__ == "__main__":
     from server import app
