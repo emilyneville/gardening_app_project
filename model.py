@@ -55,21 +55,68 @@ class PlantFavorite(db.Model):
     def __repr__(self):
         return f"<Favorite favorite_plant_id={self.favorite_plant_id}>"
 
+class Zone(db.Model):
+    """A List of possible zones"""
 
-class PlantZone(db.Model):
-    """A zone for a plant."""
-
-    __tablename__ = "zones"
+    __tablename__ = "zone"
 
     zone_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    plant_id = db.Column(db.Integer, db.ForeignKey("plants.plant_id"))
     created_date = db.Column(db.DateTime)
-
-
-    plant = db.relationship("Plant", backref="zones")
 
     def __repr__(self):
         return f"<Zone zone_id={self.zone_id}>"
+
+class PlantZone(db.Model):
+    """A List of possible zones"""
+
+    __tablename__ = "plant_zones"
+
+    plant_zone_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    plant_id = db.Column(db.Integer, db.ForeignKey("plants.plant_id"))
+    zone_id = db.Column(db.Integer, db.ForeignKey("zones.zone_id"))
+    created_date = db.Column(db.DateTime)
+
+    plant = db.relationship("Plant", backref="plant_zones")
+    zone = db.relationship("Zone", backref="plant_zones")
+
+    def __repr__(self):
+        return f"<PlantZone plant_zone_id={self.plant_zone_id}>"
+
+class UserGantt(db.Model):
+    """Gantt chart data a user has made."""
+
+    __tablename__ = "user_gantts"
+
+    user_gantt_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    gantt_name = db.Column(db.String)
+    created_date = db.Column(db.DateTime)
+    last_modified_date = db.Column(db.DateTime)
+
+    user = db.relationship("User", backref="plant_favorites")
+
+    def __repr__(self):
+        return f"<UserGantt user_gantt_id={self.user_gantt_id} gantt_name= {self.gantt_name}>"
+
+class UserGanttPlant(db.Model):
+    """Plant Items for a User Gantt Chart"""
+
+    __tablename__ = "user_gantt_plants"
+
+    user_gantt_plant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    plant_id = db.Column(db.Integer, db.ForeignKey("plants.plant_id"))
+    user_gantt_id = db.Column(db.Integer, db.ForeignKey("user_gantts.user_gantt_id"))
+    display_name = db.Column(db.String)
+    start_date = db.Column(db.DateTime)
+    end_date = db.Column(db.DateTime)
+    created_date = db.Column(db.DateTime)
+    last_modified_date = db.Column(db.DateTime)
+
+    plant = db.relationship("Plant", backref="user_gantt_plants")
+    user_gantt = db.relationship("UserGantt", backref="user_gantt_plants")
+
+    def __repr__(self):
+        return f"<Favorite favorite_plant_id={self.favorite_plant_id}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///plants", echo=True):
