@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} RSG Home{% endblock %}
+{% block title %}RSG Home{% endblock %}
 
 {% block body %}
   <!-- Main content of page -->
@@ -12,12 +12,21 @@
       <hr class="my-4" />
       <!-- (hr is horizontal rule, a thematic break) -->
 
-      <p class="lead">
-        <a class="btn btn-lg btn-primary" href="/plants" role="button">Explore Plants &raquo; </a>
-      </p>
+     
     </div>
   
-  
+    {% if session['user_email'] %}
+    <div>
+    <h3>Let's get growing, {{ session['user_email'] }} !</h3>
+    <p></p>
+    <p class="lead">
+      <a class="btn btn-lg btn-primary" href="/plants" role="button">Explore Plants &raquo; </a>
+      <a class="btn btn-lg btn-primary" href="/user_gantts" role="button">View Garden Schedules&raquo; </a>
+      <a class="btn btn-lg btn-primary" href="/plants" role="button">Build a Plot &raquo; </a>
+    </p>
+  </div>
+    
+    {% else %}
     <h2>Create an Account</h2>
     <form action="/users" method="POST">
       <p>
@@ -50,6 +59,7 @@
     <ul>
       <li><a href="/users">View all users</a></li>
     </ul>
+    {% endif %}
 
 
 
