@@ -89,6 +89,12 @@ def process_login():
 
     return redirect("/")
 
+@app.route("/user_gantts")
+def all_gantts():
+    """Landing page for gantt chart creator / Garden Schedule"""
+
+
+    return render_template("user_gantts.html")
 
 if __name__ == "__main__":
     connect_to_db(app)
