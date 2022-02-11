@@ -2,15 +2,107 @@
 {% block title %}All Plants{% endblock %}
 
 {% block body %}
-  <h1>All Plants</h1>
+<h1>All Plants</h1>
+<div class="row">
+  <div class="col-2">
 
-  <ul>
-    {% for plant in plants %}
-      <li>
-        <a href="/plant/{{ plant.plant_id }}">
-          {{ plant.name }}
-        </a>
+    <div class="sidenav">
+      <p><b>Filter & Search </b> </p>
+      <form>
+      <label for="keyword">Plant Name:</label><br>
+      <input type="text" id="keyword" name="keyword" placeholder="[search term]" style="width: 124px;">
+
+      <label for="category">Category:</label>
+      <select name="category" id="category" style="width: 124px;" multiple>
+        <option value="volvo">Volvo&nbsp;</option>
+        <option value="saab">Saab&nbsp;</option>
+        <option value="opel">Opel&nbsp;</option>
+        <option value="audi">Audi&nbsp;</option>
+      </select>
+
+      <label for="cycle">Life Cycle:</label>
+      <select name="life-cycle" id="cycle" style="width: 124px;" multiple>
+        <option value="volvo">Volvo&nbsp;</option>
+        <option value="saab">Saab&nbsp;</option>
+        <option value="opel">Opel&nbsp;</option>
+        <option value="audi">Audi&nbsp;</option>
+      </select>
+
+      <label for="sun">Sun:</label>
+      <select name="sun" id="sun" style="width: 124px;" multiple>
+        <option value="volvo">Volvo&nbsp;</option>
+        <option value="saab">Saab&nbsp;</option>
+        <option value="opel">Opel&nbsp;</option>
+        <option value="audi">Audi&nbsp;</option>
+      </select>
+
+      <label for="color">Fruit Color:</label>
+      <select name="color" id="color" style="width: 124px;" multiple>
+        <option value="volvo">Volvo&nbsp;</option>
+        <option value="saab">Saab&nbsp;</option>
+        <option value="opel">Opel&nbsp;</option>
+        <option value="audi">Audi&nbsp;</option>
+      </select>
+      <br><br>
+    <input type="submit" value="Search">
+    </form>
+
+
+    </div>
+
+
+  </div>
+  <div class="col-10">
+
+    <ul class="search-list">
+      {% for plant in plants.items %}
+        <li><p><table>
+          <tr>
+         <td class="col-xs-2"><center><img class="border" src="{{ plant.image_url }}" alt="{{ plant.name }}" width="100" height="100"></center></td>
+          <td class="col-md-10"><a href="/plant/{{ plant.plant_id }}">{{ plant.name.replace(", ", " ") }}</a><br><small class="text-muted">{{ plant.short_descr[:250] }}...</small></td>
+        </tr>
+        </table>
+      </p>
       </li>
+      {% endfor %}
+    </ul>
+  <!-- Pagination Links-->
+  <div class="text-right">
+    <a href="{{ url_for('all_plants', page=plants.prev_num) }}"
+       class="btn btn-outline-dark 
+       {% if plants.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+  
+  <!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in plants.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+  {% if page_num %}
+  <!-- Check for the active page and set the link to "Active"-->
+            {% if plants.page == page_num %}
+            <a href="{{ url_for('all_plants', page=page_num) }}"
+               class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('all_plants', page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
     {% endfor %}
-  </ul>
+    <a href="{{ url_for('all_plants', page=plants.next_num) }}"
+       class="btn btn-outline-dark 
+       {% if plants.page == plants.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+  </div>
+  <p class="text-right mt-3">
+   Showing page {{ plants.page }} of {{ plants.pages }} (24 records per page)
+  </p>
+  </div>
+</div>
+
 {% endblock %}

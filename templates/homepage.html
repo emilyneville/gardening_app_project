@@ -15,7 +15,7 @@
      
     </div>
   
-    {% if session['user_email'] %}
+    {% if session.get('user_email') %}
     <div>
     <h3>Let's get growing, {{ session['user_email'] }} !</h3>
     <p></p>

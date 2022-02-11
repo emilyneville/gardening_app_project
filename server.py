@@ -1,7 +1,7 @@
 """Server for garden planner app"""
 
-from flask import Flask, render_template, request, flash, session, redirect
-from model import connect_to_db, db
+from flask import Flask, render_template, request, flash, session, redirect, url_for
+from model import connect_to_db, db, Plant
 import crud
 
 from jinja2 import StrictUndefined
@@ -20,9 +20,8 @@ def homepage():
 @app.route("/plants")
 def all_plants():
     """View all plants."""
-
-    plants = crud.get_plants()
-
+    page = request.args.get('page', 1, type=int)
+    plants = Plant.query.paginate(page=page, per_page=24) 
     return render_template("all_plants.html", plants=plants)
 
 

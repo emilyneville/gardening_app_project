@@ -68,3 +68,5 @@ for n in range(10):
         model.db.session.add(favorite)
 
 model.db.session.commit()
+
+# exec sql statement

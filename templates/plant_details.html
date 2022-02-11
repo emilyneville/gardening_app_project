@@ -4,13 +4,16 @@
 
 {% block body %}
 <h1>{{ plant.name }}</h1>
-
+<p><img src="{{ plant.image_url }}"></p>
 <p>
   {{ plant.short_descr }}
 </p>
 
 {% if session.get('user_email') %}
-<h2>Favorite this plant</h2>
+
+
+
+<h2>[WIP] Favorite this plant</h2>
 <!-- <form action="/plant/{{ plant.plant_id }}/favorites" method="POST">
   <p>
     Rating:
@@ -22,5 +25,5 @@
 </form> -->
 {% endif %}
 
-<img src="{{ plant.image_url }}">
+
 {% endblock %}
