@@ -8,46 +8,65 @@
 
     <div class="sidenav">
       <p><b>Filter & Search </b> </p>
-      <form>
+
+      <form id="search-form">
+      <p>
       <label for="keyword">Plant Name:</label><br>
       <input type="text" id="keyword" name="keyword" placeholder="[search term]" style="width: 124px;">
+      </p>
+    
 
-      <label for="category">Category:</label>
-      <select name="category" id="category" style="width: 124px;" multiple>
-        <option value="volvo">Volvo&nbsp;</option>
-        <option value="saab">Saab&nbsp;</option>
-        <option value="opel">Opel&nbsp;</option>
-        <option value="audi">Audi&nbsp;</option>
-      </select>
+      <p>Category<br>
+        <select id="category" name="category">
+          <option hidden disabled selected value></option>
+          <option value="Do">Do</option>
+          <option value="Not">Not</option>
+          <option value="Use">Use</option>
+          <option value="Yet">Yet</option>
+        </select>
+      </p>
 
-      <label for="cycle">Life Cycle:</label>
-      <select name="life-cycle" id="cycle" style="width: 124px;" multiple>
-        <option value="volvo">Volvo&nbsp;</option>
-        <option value="saab">Saab&nbsp;</option>
-        <option value="opel">Opel&nbsp;</option>
-        <option value="audi">Audi&nbsp;</option>
-      </select>
+      <p>Sub-Category<br>
+        <select id="sub-category" name="sub-category">
+          <option hidden disabled selected value></option>
+          <option value="Do">Do</option>
+          <option value="Not">Not</option>
+          <option value="Use">Use</option>
+          <option value="Yet">Yet</option>
+        </select>
+      </p>
 
-      <label for="sun">Sun:</label>
-      <select name="sun" id="sun" style="width: 124px;" multiple>
-        <option value="volvo">Volvo&nbsp;</option>
-        <option value="saab">Saab&nbsp;</option>
-        <option value="opel">Opel&nbsp;</option>
-        <option value="audi">Audi&nbsp;</option>
-      </select>
+      <p>Life Cycle:<br>
+        <select id="life-cycle" name="life-cycle">
+          <option hidden disabled selected value></option>
+          <option value="Annual">Annual</option>
+          <option value="Perennial">Perennial</option>
+        </select>
+      </p>
 
-      <label for="color">Fruit Color:</label>
-      <select name="color" id="color" style="width: 124px;" multiple>
-        <option value="volvo">Volvo&nbsp;</option>
-        <option value="saab">Saab&nbsp;</option>
-        <option value="opel">Opel&nbsp;</option>
-        <option value="audi">Audi&nbsp;</option>
-      </select>
-      <br><br>
+      <p>Sun:<br>
+        <select id="sun" name="sun">
+          <option hidden disabled selected value></option>
+          <option value="Full">Full</option>
+          <option value="Partial">Partial</option>
+        </select>
+      </p>
+
+      <p>Fruit Color:<br>
+        <select id="color" name="color">
+          <option hidden disabled selected value></option>
+          <option value="red">red</option>
+          <option value="orange">orange</option>
+          <option value="yellow">yellow</option>
+          <option value="green">green</option>
+          <option value="blue">blue</option>
+          <option value="white">white</option>
+          <option value="purple">purple</option>
+          <option value="black">black</option>
+        </select>
+      </p>
     <input type="submit" value="Search">
     </form>
-
-
     </div>
 
 

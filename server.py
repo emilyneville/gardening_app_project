@@ -17,12 +17,34 @@ def homepage():
 
     return render_template("homepage.html")
 
-@app.route("/plants")
+@app.route("/plants",  methods=["GET"])
 def all_plants():
     """View all plants."""
+    keyword = request.args.get("keyword", "")
+    sun = request.args.get("sun", "")
+    color = request.args.get("color", "")
+    life_cycle = request.args.get("life-cycle", "")
+    category = request.args.get("category", "")
+    sub_category = request.args.get("sub_category", "")
+
+    full_search = keyword + sun + color + life_cycle + category + sub_category
+
     page = request.args.get('page', 1, type=int)
-    plants = Plant.query.paginate(page=page, per_page=24) 
+
+    if full_search.strip() == "":
+        plants = Plant.query.paginate(page=page, per_page=24) 
+    
+    else:
+        plants = Plant.query.filter(
+            Plant.name.ilike(f'%{keyword}%'),
+            Plant.sun.ilike(f'%{sun}%'),
+            Plant.fruit_color.ilike(f'%{color}%'),
+            Plant.life_cycle.ilike(f'%{life_cycle}%')
+            ).paginate(page=page, per_page=24) 
+    
     return render_template("all_plants.html", plants=plants)
+
+
 
 
 @app.route("/plant/<plant_id>")

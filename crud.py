@@ -44,7 +44,7 @@ def get_user_by_email(email):
 ##################
 
 def create_plant(name, category, image_url, short_descr, botanical_name=None, seed_type=None, fruit_color=None, breed=None,
-                maturity=None, life_cycle=None, sow_method=None, before_planting=None, planting=None, watering=None, days_to_maturity_text=None,
+                maturity=None, sun=None, life_cycle=None, sow_method=None, before_planting=None, planting=None, watering=None, days_to_maturity_text=None,
                 harvesting=None, tips=None):
     """Create and return a new plant."""
     plant = Plant(
@@ -57,6 +57,7 @@ def create_plant(name, category, image_url, short_descr, botanical_name=None, se
     fruit_color=fruit_color,
     breed=breed,
     maturity=maturity,
+    sun=sun,
     life_cycle=life_cycle,
     sow_method=sow_method,
     before_planting=before_planting,

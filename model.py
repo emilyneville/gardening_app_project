@@ -35,6 +35,8 @@ class Plant(db.Model):
     fruit_color = db.Column(db.String)
     breed = db.Column(db.String)
     maturity = db.Column(db.String)
+    sun = db.Column(db.String)
+
     life_cycle = db.Column(db.String)
     sow_method = db.Column(db.String)
     fruit_weight_oz = db.Column(db.Float)
