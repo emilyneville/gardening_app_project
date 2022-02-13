@@ -110,13 +110,16 @@ def register_user():
     return redirect("/")
 
 
-@app.route("/users/<user_id>")
-def show_user(user_id):
+@app.route("/user_info", methods=["GET", "POST"])
+def show_user():
     """Show details on a particular user."""
-
-    user = crud.get_user_by_id(user_id)
-
-    return render_template("user_details.html", user=user)
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    if logged_in_email is None:
+        flash("You must log in to view profile info.")
+        return redirect("/")
+    else:
+        return render_template("user_details.html", user=user)
 
 
 @app.route("/login", methods=["POST"])
