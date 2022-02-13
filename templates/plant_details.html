@@ -3,27 +3,17 @@
 {% block title %}{{ plant.name }} - Details{% endblock %}
 
 {% block body %}
-<h1>{{ plant.name }}</h1>
+<h1>{{ plant.name }}</h1> 
+<form action="/plant/{{ plant.plant_id }}/favorites" method="POST">
+  <p><input type="submit" class="btn btn-primary btn-sm" value="Favorite This Plant!"></p>
+</form>
+
 <p><img src="{{ plant.image_url }}"></p>
 <p>
   {{ plant.short_descr }}
 </p>
 
-{% if session.get('user_email') %}
 
-
-
-<h2>[WIP] Favorite this plant</h2>
-<!-- <form action="/plant/{{ plant.plant_id }}/favorites" method="POST">
-  <p>
-    Rating:
-    <select name="favorite">
-      <option value="">Select rating</option>
-    </select>
-  </p>
-  <p><input type="submit"></p>
-</form> -->
-{% endif %}
 
 
 {% endblock %}

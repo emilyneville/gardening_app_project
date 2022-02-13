@@ -2,7 +2,7 @@
 {% block title %}All Plants{% endblock %}
 
 {% block body %}
-<h1>All Plants</h1>
+<h1>Plant Explorer</h1>
 <div class="row">
   <div class="col-2">
 
@@ -27,7 +27,7 @@
       </p>
 
       <p>Sub-Category<br>
-        <select id="sub-category" name="sub-category">
+        <select id="sub_category" name="sub_category">
           <option hidden disabled selected value></option>
           <option value="Do">Do</option>
           <option value="Not">Not</option>
@@ -37,7 +37,7 @@
       </p>
 
       <p>Life Cycle:<br>
-        <select id="life-cycle" name="life-cycle">
+        <select id="life_cycle" name="life_cycle">
           <option hidden disabled selected value></option>
           <option value="Annual">Annual</option>
           <option value="Perennial">Perennial</option>
@@ -87,7 +87,7 @@
     </ul>
   <!-- Pagination Links-->
   <div class="text-right">
-    <a href="{{ url_for('all_plants', page=plants.prev_num) }}"
+    <a href="{{ url_for('all_plants', page=plants.prev_num, keyword=keyword, sun=sun, color=color, life_cycle=life_cycle, category=category, sub_category=sub_category) }}"
        class="btn btn-outline-dark 
        {% if plants.page == 1 %}disabled{% endif %}">
         &laquo;
@@ -98,12 +98,12 @@
   {% if page_num %}
   <!-- Check for the active page and set the link to "Active"-->
             {% if plants.page == page_num %}
-            <a href="{{ url_for('all_plants', page=page_num) }}"
+            <a href="{{ url_for('all_plants', page=page_num, keyword=keyword, sun=sun, color=color, life_cycle=life_cycle, category=category, sub_category=sub_category) }}"
                class="btn btn-dark">
                 {{ page_num }}
             </a>
             {% else %}
-            <a href="{{ url_for('all_plants', page=page_num) }}"
+            <a href="{{ url_for('all_plants', page=page_num, keyword=keyword, sun=sun, color=color, life_cycle=life_cycle, category=category, sub_category=sub_category) }}"
                class="btn btn-outline-dark">
                 {{ page_num }}
             </a>
@@ -112,7 +112,7 @@
             ...
         {% endif %}
     {% endfor %}
-    <a href="{{ url_for('all_plants', page=plants.next_num) }}"
+    <a href="{{ url_for('all_plants', page=plants.next_num, keyword=keyword, sun=sun, color=color, life_cycle=life_cycle, category=category, sub_category=sub_category) }}"
        class="btn btn-outline-dark 
        {% if plants.page == plants.pages %}disabled{% endif %}">
         &raquo;

@@ -96,6 +96,7 @@ def create_favorite(user, plant):
     return favorite
 
 ## delete favorite?
+## ToDO https://docs.sqlalchemy.org/en/14/tutorial/data_update.html#the-delete-sql-expression-construct
 def delete_favorite(user_plant):
 
     deleted_favorite = print("Add in a delete command to delete this favorite!")

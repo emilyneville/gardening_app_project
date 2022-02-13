@@ -20,6 +20,7 @@ def homepage():
 @app.route("/plants",  methods=["GET"])
 def all_plants():
     """View all plants."""
+    url_list = []
     keyword = request.args.get("keyword", "")
     sun = request.args.get("sun", "")
     color = request.args.get("color", "")
@@ -42,7 +43,8 @@ def all_plants():
             Plant.life_cycle.ilike(f'%{life_cycle}%')
             ).paginate(page=page, per_page=24) 
     
-    return render_template("all_plants.html", plants=plants)
+    return render_template("all_plants.html", plants=plants,
+            keyword=keyword, sun=sun, color=color, life_cycle=life_cycle, category=category, sub_category=sub_category)
 
 
 
@@ -54,6 +56,30 @@ def show_plant(plant_id):
     plant = crud.get_plant_by_id(plant_id)
 
     return render_template("plant_details.html", plant=plant)
+
+
+@app.route("/plant/<plant_id>/favorites", methods=["POST"])
+def favorite_plant(plant_id):
+    """Create a new favorite for the user."""
+    logged_in_email = session.get("user_email")
+    plant_id = plant_id
+    if logged_in_email is None:
+        flash("You must log in to favorite a plant.")
+    else:
+        user = crud.get_user_by_email(logged_in_email)
+        plant = crud.get_plant_by_id(plant_id)
+        favorite = crud.create_favorite(user, plant)
+        db.session.add(favorite)
+        db.session.commit()
+
+        flash(f"Added to your favorites!!")
+
+    return redirect(f"/plant/{plant_id}")
+
+    return render_template("plant_details.html", plant=plant)
+
+
+
 
 
 @app.route("/users")
