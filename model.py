@@ -27,7 +27,11 @@ class Plant(db.Model):
 
     plant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String)
+
+    plant_type = db.Column(db.Text)
     category = db.Column(db.Text)
+    sub_category = db.Column(db.Text)
+    
     image_url = db.Column(db.Text)
     short_descr = db.Column(db.String)
     botanical_name = db.Column(db.String)
@@ -72,7 +76,7 @@ class PlantFavorite(db.Model):
     user = db.relationship("User", backref="plant_favorites")
 
     def __repr__(self):
-        return f"<Favorite favorite_plant_id={self.favorite_plant_id} plant_id={self.lant_id} user_id={self.user}  >"
+        return f"<Favorite favorite_plant_id={self.favorite_plant_id} plant_id={self.plant_id} user_id={self.user}  >"
 
 class Zone(db.Model):
     """A List of possible zones"""

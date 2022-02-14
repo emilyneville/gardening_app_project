@@ -17,22 +17,11 @@
     
 
       <p>Category<br>
-        <select id="category" name="category">
+        <select id="category" name="category" style="width: 124px;">
           <option hidden disabled selected value></option>
-          <option value="Do">Do</option>
-          <option value="Not">Not</option>
-          <option value="Use">Use</option>
-          <option value="Yet">Yet</option>
-        </select>
-      </p>
-
-      <p>Sub-Category<br>
-        <select id="sub_category" name="sub_category">
-          <option hidden disabled selected value></option>
-          <option value="Do">Do</option>
-          <option value="Not">Not</option>
-          <option value="Use">Use</option>
-          <option value="Yet">Yet</option>
+          {% for option in plant_category_options %}
+            <option value={{ option }}>{{ option }}</option>
+          {% endfor %}
         </select>
       </p>
 

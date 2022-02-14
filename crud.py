@@ -43,13 +43,15 @@ def get_user_by_email(email):
 ##### plants #####
 ##################
 
-def create_plant(name, category, image_url, short_descr, botanical_name=None, seed_type=None, fruit_color=None, breed=None,
+def create_plant(name, plant_type, category,  image_url, short_descr, botanical_name=None, seed_type=None, fruit_color=None, breed=None,
                 maturity=None, sun=None, life_cycle=None, sow_method=None, before_planting=None, planting=None, watering=None, days_to_maturity_text=None,
-                harvesting=None, tips=None):
+                harvesting=None, tips=None, sub_category=None):
     """Create and return a new plant."""
     plant = Plant(
     name=name,
+    plant_type=plant_type, 
     category=category,
+    sub_category=sub_category,
     image_url=image_url,
     short_descr=short_descr,
     botanical_name=botanical_name,
@@ -88,10 +90,10 @@ def get_plant_by_id(plant_id):
 ##### favorites #####
 #####################
 
-def create_favorite(user, plant):
+def create_favorite(user_id, plant_id):
     """Create and return a new favorite plant."""
 
-    favorite = PlantFavorite(user=user, plant=plant, created_date=datetime.now())
+    favorite = PlantFavorite(user_id=user_id, plant_id=plant_id, created_date=datetime.now())
 
     return favorite
 

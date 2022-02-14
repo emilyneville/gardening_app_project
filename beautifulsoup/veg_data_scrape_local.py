@@ -58,6 +58,18 @@ for filename in os.scandir(directory):
             # instruction_label = blurb
             # instruction_value = blurb_data.strip()
             # veg_dict[name_id][instruction_label] = instruction_value
+
+        cats = soup.find_all("li", {"class": "breadcrumb-item"})
+
+        cat_counter = 1
+        cats_list = []
+        for cat in cats:
+            if cat.text.strip() not in cats_list:
+                # print(f"{cat_counter} {cat.text.strip()}")
+                cats_list.append(cat.text.strip()) 
+                veg_dict[name_id][f"cat_{cat_counter}"] = cat.text.strip()
+                cat_counter+=1
+
         product_id_counter += 1
 
 print(" **** THE DATA IS DONE ****")

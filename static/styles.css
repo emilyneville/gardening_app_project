@@ -46,3 +46,7 @@ img {
     font-size: 28px; /* Increased text to enable scrolling */
     padding: 0px 10px;
   }
+
+  .plant-attribute {
+    padding: 25px;
+  }

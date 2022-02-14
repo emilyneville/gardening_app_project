@@ -3,5 +3,9 @@
 {% block title %}{{ user.email }}'s Page{% endblock %}
 
 {% block body %}
-<h1>{{ user.email }}</h1>
+  
+{% if session.get('user_email') %}
+<div>
+<h3>Let's get growing, {{ session['user_email'] }} !</h3>
+{% endif %}
 {% endblock %}
