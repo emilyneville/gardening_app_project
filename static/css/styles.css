@@ -1,0 +1,54 @@
+/* up top navbar */
+.navbar-brand {
+  border-radius: 5px;
+  border: 2px solid #ccc !important;
+  padding: 0.01em 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* makes the image corners slightly rounded */
+img {
+  border-radius: 5px;
+}
+
+/* stops the search list from having bullets */
+.search-list {
+  list-style-type: none;
+}
+
+.sidenav {
+  width: 140px;
+  z-index: 1;
+  top: 130x;
+  left: 10px;
+  background: #eee;
+  overflow-x: hidden;
+  padding: 8px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #064579;
+}
+
+.main {
+  margin-left: 140px; /* Same width as the sidebar + left position in px */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+.plant-attribute {
+  padding: 25px;
+}
+/* 
+.google-visualization-tooltip {
+  font-family: Arial, Helvetica, sans-serif !important;
+} */
