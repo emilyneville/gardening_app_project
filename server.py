@@ -17,6 +17,9 @@ def homepage():
 
     return render_template("homepage.html")
 
+##################################################
+#               *** PLANTS ***                   #
+##################################################
 @app.route("/plants",  methods=["GET"])
 def all_plants():
     """View all plants."""
@@ -61,39 +64,25 @@ def all_plants():
     return render_template("all_plants.html", plants=plants, plant_category_options=plant_category_options,
             keyword=keyword, sun=sun, color=color, life_cycle=life_cycle, category=category, sub_category=sub_category)
 
-
-
-
 @app.route("/plant/<plant_id>")
 def show_plant(plant_id):
     """Show details on a particular plant."""
-
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
     plant = crud.get_plant_by_id(plant_id)
 
-    return render_template("plant_details.html", plant=plant)
-
-
-@app.route("/plant/<plant_id>/favorites", methods=["POST"])
-def favorite_plant(plant_id):
-    """Create a new favorite for the user."""
-    logged_in_email = session.get("user_email")
-    plant_id = plant_id
     if logged_in_email is None:
-        flash("You must log in to favorite a plant.")
+        current_favorite = False
+    elif crud.get_favorite_by_user_and_plant(user.user_id, plant_id) is not None:
+        current_favorite = True
     else:
-        user = crud.get_user_by_email(logged_in_email)
-        # plant = crud.get_plant_by_id(plant_id)
-        favorite = crud.create_favorite(user.user_id, plant_id)
-        db.session.add(favorite)
-        db.session.commit()
+        current_favorite = False
+  
+    return render_template("plant_details.html", plant=plant, current_favorite=current_favorite)
 
-        flash(f"Added to your favorites!!")
-
-        return redirect(f"/plant/{plant_id}")
-
-
-
-
+#################################################
+#               *** USERS ***                   #
+#################################################
 
 @app.route("/users")
 def all_users():
@@ -102,7 +91,6 @@ def all_users():
     users = crud.get_users()
 
     return render_template("all_users.html", users=users)
-
 
 @app.route("/users", methods=["POST"])
 def register_user():
@@ -121,7 +109,6 @@ def register_user():
         flash("Account created! Please log in.")
 
     return redirect("/")
-
 
 @app.route("/user_info", methods=["GET", "POST"])
 def show_user():
@@ -153,6 +140,46 @@ def process_login():
 
     return redirect("/")
 
+#####################################################
+#               *** FAVORITES ***                   #
+#####################################################
+
+@app.route("/add-favorite", methods=["POST"])
+def add_favorite():
+    """Add a favorite plant to our database."""
+    plant_id = request.json.get("plantId")
+    logged_in_email = session.get("user_email")
+    plant_id = int(plant_id)
+    if logged_in_email is None:
+        flash("You must log in to favorite a plant.")
+        return { "success": "false"} 
+    else:
+        user = crud.get_user_by_email(logged_in_email)
+        favorite = crud.create_favorite(user.user_id, plant_id)
+        db.session.add(favorite)
+        db.session.commit()
+        return { "success":"true"} 
+
+@app.route("/remove-favorite", methods=["POST"])
+def remove_favorite():
+    """Remove a favorite plant to our database."""
+
+    plant_id = request.json.get("plantId")
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    deleted_favorite = crud.delete_favorite(user.user_id, plant_id)
+    db.session.delete(deleted_favorite)
+    db.session.commit()
+    return { "success": "true"}
+
+
+
+
+
+##################################################
+#               *** GANTTS ***                   #
+##################################################
+
 @app.route("/user_gantts")
 def all_gantts():
     """Landing page for gantt chart creator / Garden Schedule"""
@@ -164,13 +191,15 @@ def all_gantts():
 def gantt_detail():
     """Shows specific gantt chart"""
 
-
     return render_template("user_gantt_details.html")
+
+#################################################
+#               *** PLOTS ***                   #
+#################################################
 
 @app.route("/user_bed_details")
 def bed_detail():
     """Shows specific bed design"""
-
 
     return render_template("user_bed_details.html")
 

@@ -54,6 +54,7 @@ class Plant(db.Model):
     days_to_maturity_text = db.Column(db.String)
     harvesting = db.Column(db.String)
     tips = db.Column(db.String)
+    days_to_maturity = db.Column(db.String)
 
     created_date = db.Column(db.DateTime)
     last_modified_date = db.Column(db.DateTime)

@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ plant.name }} - Details{% endblock %}
+{% block title %}{{ plant.plant_id }}{% endblock %}
 
 {% block body %}
 
 <h1>{{ plant.name }}</h1> 
 
-<form action="/plant/{{ plant.plant_id }}/favorites" method="POST">
-  <p><input type="submit" class="btn btn-primary btn-sm" value="Favorite This Plant!"></p>
-</form>
+
+{% if  current_favorite == True %}
+<p>
+    <button id="favorite-button" class="btn btn-outline-danger btn-sm">Remove Plant From Favorites</button>
+</p>
+{% else %}
+<p>
+  <button id="favorite-button" class="btn btn-primary btn-sm">Favorite This Plant!</button>
+</p>
+{% endif %}
+
 
 <div class="row">
   <div class="col-6"> <p><img src="{{ plant.image_url }}"> </p>  </div>
@@ -49,5 +57,5 @@
   <div class="col-sm-4"><h6>harvesting</h6> {{ plant.harvesting }}</div>
   <div class="col-sm-4"><h6>tips</h6> {{ plant.tips }}</div>
 </div>
-
+<script src="/static/js/plant_details.js"></script>
 {% endblock %}

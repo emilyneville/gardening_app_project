@@ -45,7 +45,7 @@ def get_user_by_email(email):
 
 def create_plant(name, plant_type, category,  image_url, short_descr, botanical_name=None, seed_type=None, fruit_color=None, breed=None,
                 maturity=None, sun=None, life_cycle=None, sow_method=None, before_planting=None, planting=None, watering=None, days_to_maturity_text=None,
-                harvesting=None, tips=None, sub_category=None):
+                harvesting=None, tips=None, sub_category=None, days_to_maturity=None):
     """Create and return a new plant."""
     plant = Plant(
     name=name,
@@ -68,6 +68,7 @@ def create_plant(name, plant_type, category,  image_url, short_descr, botanical_
     days_to_maturity_text=days_to_maturity_text,
     harvesting=harvesting,
     tips=tips,
+    days_to_maturity=days_to_maturity,
     created_date=datetime.now(),
     last_modified_date=datetime.now()
     )
@@ -97,13 +98,20 @@ def create_favorite(user_id, plant_id):
 
     return favorite
 
-## delete favorite?
-## ToDO https://docs.sqlalchemy.org/en/14/tutorial/data_update.html#the-delete-sql-expression-construct
-def delete_favorite(user_plant):
+def delete_favorite(user_id, plant_id):
+    """Delete a PlantFavorite with UserID and PlantID."""
 
-    deleted_favorite = print("Add in a delete command to delete this favorite!")
-
+    deleted_favorite = PlantFavorite.query.filter_by(user_id=user_id, plant_id=plant_id).first()
+    
     return deleted_favorite
+
+
+def get_favorite_by_user_and_plant(user_id, plant_id):
+    """Return a PlantFavorite with UserID and PlantID."""
+
+    return PlantFavorite.query.filter_by(user_id=user_id, plant_id=plant_id).first()
+
+
 
 ###################
 ##### gantts ######
