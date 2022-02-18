@@ -22,7 +22,7 @@ with open("data/veg_data.json") as f:
 
 plants_in_db = []
 for plant, plant_attributes in plant_data.items():
-    name, plant_type, category, image_url, short_descr,botanical_name,seed_type,fruit_color,breed,maturity,sun,life_cycle,sow_method,before_planting,planting,watering,days_to_maturity_text,harvesting,tips,sub_category,days_to_maturity, =(
+    name, plant_type, category, image_url, short_descr,botanical_name,seed_type,fruit_color,breed,maturity,sun,life_cycle,sow_method,before_planting,planting,watering,days_to_maturity_text,harvesting,tips,sub_category,days_to_maturity =(
         plant_attributes.get("name"),
         plant_attributes.get("cat_1"),
         plant_attributes.get("cat_2"),
@@ -43,14 +43,14 @@ for plant, plant_attributes in plant_data.items():
         plant_attributes.get("Harvesting:"),
         plant_attributes.get("Tips:"),
         plant_attributes.get("cat_3"),
-        plant_attributes.get("Days To Maturity (# Days)"),
+        plant_attributes.get("Days To Maturity (# Days)")
        
     )
     print(plant_attributes.get("name"))
     db_plant = crud.create_plant(name,plant_type, category,image_url,short_descr,
     botanical_name, seed_type,fruit_color,breed,maturity,sun,life_cycle,
     sow_method,before_planting,planting,watering,
-    days_to_maturity_text,harvesting,tips, sub_category
+    days_to_maturity_text,harvesting,tips, sub_category, days_to_maturity
     )
     plants_in_db.append(db_plant)
 

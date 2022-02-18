@@ -115,12 +115,17 @@ def show_user():
     """Show details on a particular user."""
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
-    
+
+    page = request.args.get('page', 1, type=int)
+    # plants = Plant.query.paginate(page=page, per_page=24)
+    plant_favs = crud.get_favorites_by_user(user.user_id).paginate(page=page, per_page=5)
+
+
     if logged_in_email is None:
         flash("You must log in to view profile info.")
         return redirect("/")
     else:
-        return render_template("user_details.html", user=user)
+        return render_template("user_details.html", user=user, plant_favs=plant_favs)
 
 
 @app.route("/login", methods=["POST"])
@@ -171,8 +176,6 @@ def remove_favorite():
     db.session.delete(deleted_favorite)
     db.session.commit()
     return { "success": "true"}
-
-
 
 
 

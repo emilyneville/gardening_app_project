@@ -111,6 +111,11 @@ def get_favorite_by_user_and_plant(user_id, plant_id):
 
     return PlantFavorite.query.filter_by(user_id=user_id, plant_id=plant_id).first()
 
+def get_favorites_by_user(user_id):
+    """Return a PlantFavorite with UserID and PlantID."""
+
+    return PlantFavorite.query.filter_by(user_id=user_id)
+
 
 
 ###################

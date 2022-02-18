@@ -8,4 +8,79 @@
 <div>
 <h3>Let's get growing, {{ session['user_email'] }} !</h3>
 {% endif %}
+<hr class="rounded">
+
+
+
+<div class="row">
+
+
+
+    <div class="col-6">
+        <h5>Plant Favorites</h5>
+        <ul class="search-list">
+            {% for plant_fav in plant_favs.items %}
+              <li><p><table>
+                <tr>
+               <td class="col-xs-2"><center><img class="border" src="{{ plant_fav.plant.image_url }}" alt="{{ plant_fav.plant.name }}" width="100" height="100"></center></td>
+                <td class="col-md-10"><a href="/plant/{{ plant_fav.plant.plant_id }}">{{ plant_fav.plant.name.replace(", ", " ") }}</a></td>
+              </tr>
+              </table>
+            </p>
+            </li>
+            {% endfor %}
+          </ul>
+        <!-- Pagination Links-->
+        <div class="text-left">
+          <a href="{{ url_for('show_user', page=plant_favs.prev_num) }}"
+             class="btn btn-sm btn-outline-dark 
+             {% if plant_favs.page == 1 %}disabled{% endif %}">
+              &laquo;
+          </a>
+        
+        <!-- Loop through the number of pages to display a link for each-->
+          {% for page_num in plant_favs.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        <!-- Check for the active page and set the link to "Active"-->
+                  {% if plant_favs.page == page_num %}
+                  <a href="{{ url_for('show_user', page=page_num) }}"
+                     class="btn btn-sm btn-dark">
+                      {{ page_num }}
+                  </a>
+                  {% else %}
+                  <a href="{{ url_for('show_user', page=page_num) }}"
+                     class="btn btn-sm btn-outline-dark">
+                      {{ page_num }}
+                  </a>
+                  {% endif %}
+              {% else %}
+                  ...
+              {% endif %}
+          {% endfor %}
+          <a href="{{ url_for('show_user', page=plant_favs.next_num) }}"
+             class="btn btn-sm btn-outline-dark 
+             {% if plant_favs.page == plant_favs.pages %}disabled{% endif %}">
+              &raquo;
+          </a>
+          <p></p>
+        </div>
+        </div>
+
+
+    
+        <div class="col-6">
+            <h5>Saved Garden Schedules</h5> 
+        </div>
+        
+        
+       
+        
+
+
+
+    </div>
+
+
+    
+</div>
 {% endblock %}
