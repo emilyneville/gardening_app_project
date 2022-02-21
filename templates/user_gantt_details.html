@@ -1,8 +1,11 @@
 {% extends 'base.html' %} {% block title %}Garden Schedule{% endblock %} {%
 block head %}
 <title>W3.CSS</title>
-<link rel="preconnect" href="//fonts.googleapis.com" crossorigin="">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Google+Sans_old:400,500|Roboto:400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700&amp;display=swap">
+<link rel="preconnect" href="//fonts.googleapis.com" crossorigin="" />
+<link
+  rel="stylesheet"
+  href="//fonts.googleapis.com/css?family=Google+Sans_old:400,500|Roboto:400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700&amp;display=swap"
+/>
 <script
   type="text/javascript"
   src="https://www.gstatic.com/charts/loader.js"
@@ -166,8 +169,7 @@ block head %}
     );
 
     chart.draw(data, options);
-  };
-
+  }
 </script>
 
 {% endblock %} {% block body %}
@@ -178,11 +180,10 @@ block head %}
 
 <h2>Add Plants to Schedule</h2>
 
-<ul id="list"></ul>
+<div id="wrapper">
+  <ul id="list"></ul>
+</div>
 
-<!-- <input type="text" id="plant-names" /> -->
-
-<!-- <form id="add-gantt-line" method="post" action="/new-gantt-line"> -->
 <div>
   <label for="plant-names">Plants</label>
   <select name="plant_name" class="form-control" id="plant-names">
@@ -200,6 +201,7 @@ block head %}
     class="form-control"
     name="plant-start"
     id="start-date"
+    value="2022-02-15"
     required
   />
   <label for="end-date">Harvest Date</label>
@@ -208,6 +210,7 @@ block head %}
     class="form-control"
     name="plant-end"
     id="end-date"
+    value="2022-05-31"
     required
   />
 </div>
@@ -218,9 +221,6 @@ block head %}
   class="btn btn-primary mt-2"
   value="Add Plant"
 />
-
-<!-- <button onclick="addItem()" class="buttonClass"> Add item</button>
- <button onclick="removeItem()" class="buttonClass">Remove item</button> -->
 
 <script src="/static/js/add_gantt_items.js"></script>
 

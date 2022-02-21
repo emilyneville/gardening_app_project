@@ -1,10 +1,34 @@
 <html>
-<head>
+  <head>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous"
+  />
+
     <style>
-      
-      #drag-1, #drag-2 {
-        width: 25%;
-        min-height: 6.5em;
+
+
+      #top-row {
+        width:100%;
+        height: 100px;
+        background-color: lightseagreen;
+        padding: 15;
+        margin:auto; 
+        display:block;
+
+
+      }
+
+      #drag-1,
+      #drag-2,
+      #drag-3,
+      #drag-4 {
+        width: 150px;
+        height: 150px;
+        text-align: center;
+        /* min-height: 6.5em; */
         margin: 1rem 0 0 1rem;
         background-color: #29e;
         color: white;
@@ -13,86 +37,92 @@
         touch-action: none;
         user-select: none;
         transform: translate(0px, 0px);
+        border-style: solid;
+        border-color: lightgray;
       }
 
-
-
+      
 
 
     </style>
-</head>
-<body>
-
-  <div id="drag-1" class="draggable">
-    <p> You can drag one element </p>
-  </div>
-  <div id="drag-2" class="draggable">
-    <p> with each pointer </p>
-  </div>
+  </head>
+  <body>
+    <div id = "top-row" class="row"> <div> 
 
 
+    <div class="row">
+      <div class="col-2">[[[[[[[[[[[[Placeholder]]]]]]]]]]]]] </div>
+      <div class="col-10">
+        <div id="drag-1" class="draggable">
+          <p>Plant 1</p>
+        </div>
+        <div id="drag-2" class="draggable">
+          <p>Plant 2</p>
+        </div>
 
-<script>
-import interact from 'interactjs'
+        <div id="drag-3" class="draggable">
+          <p>Plant 3</p>
+        </div>
 
-// target elements with the "draggable" class
-interact('.draggable')
-  .draggable({
-    // enable inertial throwing
-    inertia: true,
-    // keep the element within the area of it's parent
-    modifiers: [
-      interact.modifiers.restrictRect({
-        restriction: 'parent',
-        endOnly: true
-      })
-    ],
-    // enable autoScroll
-    autoScroll: true,
+        <div id="drag-4" class="draggable">
+          <p>Plant 4</p>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 
-    listeners: {
-      // call this function on every dragmove event
-      move: dragMoveListener,
+    <script>
+      // target elements with the "draggable" class
+      interact(".draggable").draggable({
+        // enable inertial throwing
+        inertia: true,
+        // keep the element within the area of it's parent
+        modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: "parent",
+            endOnly: true,
+          }),
+        ],
+        // enable autoScroll
+        autoScroll: true,
 
-      // call this function on every dragend event
-      end (event) {
-        var textEl = event.target.querySelector('p')
+        listeners: {
+          // call this function on every dragmove event
+          move: dragMoveListener,
 
-        textEl && (textEl.textContent =
-          'moved a distance of ' +
-          (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-                     Math.pow(event.pageY - event.y0, 2) | 0))
-            .toFixed(2) + 'px')
+          // call this function on every dragend event
+          end(event) {
+            var textEl = event.target.querySelector("p");
+
+            textEl &&
+              (textEl.textContent =
+                "moved a distance of " +
+                Math.sqrt(
+                  (Math.pow(event.pageX - event.x0, 2) +
+                    Math.pow(event.pageY - event.y0, 2)) |
+                    0
+                ).toFixed(2) +
+                "px");
+          },
+        },
+      });
+
+      function dragMoveListener(event) {
+        var target = event.target;
+        // keep the dragged position in the data-x/data-y attributes
+        var x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx;
+        var y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
+
+        // translate the element
+        target.style.transform = "translate(" + x + "px, " + y + "px)";
+
+        // update the posiion attributes
+        target.setAttribute("data-x", x);
+        target.setAttribute("data-y", y);
       }
-    }
-  })
 
-function dragMoveListener (event) {
-  var target = event.target
-  // keep the dragged position in the data-x/data-y attributes
-  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
-
-  // translate the element
-  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
-
-  // update the posiion attributes
-  target.setAttribute('data-x', x)
-  target.setAttribute('data-y', y)
-}
-
-// this function is used later in the resizing and gesture demos
-window.dragMoveListener = dragMoveListener
-
-
-
-
-
-
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
-
-
-</body>
+      // this function is used later in the resizing and gesture demos
+      window.dragMoveListener = dragMoveListener;
+    </script>
+  </body>
 </html>

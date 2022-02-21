@@ -145,6 +145,25 @@ def create_user_gantt_plant(user_gantt_id, plant_id, display_name, start_date, e
     )
     return user_gantt_plant
 
+
+def delete_gantt_plant(user_gantt_id, plant_id):
+    """Delete a PlantFavorite with GanttID and PlantID."""
+
+    deleted_plant = UserGanttPlant.query.filter_by(user_gantt_id=user_gantt_id, plant_id=plant_id).first()
+    
+    return deleted_plant
+
+
+def get_gantts_by_user_id(user_id):
+    """Return a list of the user's saved Gantt Charts"""
+    return UserGantt.query.filter_by(user_id=user_id)
+
+def get_plants_by_gantt_id(user_gantt_id):
+    """Return all the Plants associated with a given Gantt Chart"""
+    return UserGanttPlant.query.filter_by(user_gantt_id=user_gantt_id)
+
+
+
 ##################
 ##### zones ######
 ##################

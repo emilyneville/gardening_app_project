@@ -118,7 +118,7 @@ def show_user():
 
     page = request.args.get('page', 1, type=int)
     # plants = Plant.query.paginate(page=page, per_page=24)
-    plant_favs = crud.get_favorites_by_user(user.user_id).paginate(page=page, per_page=5)
+    plant_favs = crud.get_favorites_by_user(user.user_id).paginate(page=page, per_page=10)
 
 
     if logged_in_email is None:
@@ -144,6 +144,19 @@ def process_login():
         flash(f"Welcome back, {user.email}!")
 
     return redirect("/")
+
+@app.route("/logout", methods=["POST"])
+def process_logout():
+    """Process user logout."""
+   
+    if session["user_email"] != None:
+        session["user_email"] = None
+        flash("You have logged out.")
+    else: 
+        flash("Error processing your request. Please try again.")
+
+    return redirect("/")
+
 
 #####################################################
 #               *** FAVORITES ***                   #
@@ -190,7 +203,7 @@ def all_gantts():
 
     return render_template("user_gantts.html")
 
-@app.route("/user_gantt_details")
+@app.route("/user_gantt/<gantt_id>", )
 def gantt_detail():
     """Shows specific gantt chart"""
 
