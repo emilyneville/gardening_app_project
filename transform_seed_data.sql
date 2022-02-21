@@ -15,5 +15,4 @@ UPDATE plants SET sun = '' WHERE sun IS NULL;
 UPDATE plants SET life_cycle = '' WHERE life_cycle IS NULL;
 
 
-SELECT DISTINCT name FROM plants LIMIT 10;
-select distinct plant_id, name, fruit_color, maturity from plants WHERE LOWER(name) like '%zucc%' and fruit_color like '%%';
+SELECT fruit_color, count(*) AS counts from plants group by 1 order by 2 desc;

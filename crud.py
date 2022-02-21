@@ -45,7 +45,9 @@ def get_user_by_email(email):
 
 def create_plant(name, plant_type, category,  image_url, short_descr, botanical_name=None, seed_type=None, fruit_color=None, breed=None,
                 maturity=None, sun=None, life_cycle=None, sow_method=None, before_planting=None, planting=None, watering=None, days_to_maturity_text=None,
-                harvesting=None, tips=None, sub_category=None, days_to_maturity=None):
+                harvesting=None, tips=None, sub_category=None, days_to_maturity=None, fruit_weight_oz=None,row_spacing_in=None,
+                sow_depth_in=None,plant_spacing_in=None,plant_weight_in=None,plant_depth_in=None,plant_height_in=None,plant_width_in=None,zone_list=None):
+
     """Create and return a new plant."""
     plant = Plant(
     name=name,
@@ -69,6 +71,15 @@ def create_plant(name, plant_type, category,  image_url, short_descr, botanical_
     harvesting=harvesting,
     tips=tips,
     days_to_maturity=days_to_maturity,
+    fruit_weight_oz=fruit_weight_oz,
+    row_spacing_in=row_spacing_in,
+    sow_depth_in=sow_depth_in,
+    plant_spacing_in=plant_spacing_in,
+    plant_weight_in=plant_weight_in,
+    plant_depth_in=plant_depth_in,
+    plant_height_in=plant_height_in,
+    plant_width_in=plant_width_in,
+    zone_list=zone_list,
     created_date=datetime.now(),
     last_modified_date=datetime.now()
     )

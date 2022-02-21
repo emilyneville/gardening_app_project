@@ -7,7 +7,7 @@ import re
 directory = 'bs_fruit_files'
 
 product_id_counter = 1
-fruit_dict = {}
+veg_dict = {}
 
 ## define id, plant, file location, soup
 for filename in os.scandir(directory):
@@ -17,7 +17,7 @@ for filename in os.scandir(directory):
         name_str = str(soup.find("h1", {"class": "product-name"}).text.strip()).replace(" ", "_")
         name_r = re.findall(r"\w", name_str)
         name_id = "".join(name_r).lower()
-        fruit_dict[name_id] = {"id":product_id_counter, "dir":filename.path }
+        veg_dict[name_id] = {"id":product_id_counter, "dir":filename.path }
         
         print("#" + str(product_id_counter) + " " + name_id + " -> " + filename.path)
 
@@ -27,10 +27,10 @@ for filename in os.scandir(directory):
         short_descr = soup.find("div", {"class": "col-12 read-more__container"}).text.strip()
         img = soup.find(itemprop="image")
 
-        fruit_dict[name_id]['name'] = name.replace("Seed", "").strip()
-        fruit_dict[name_id]['category'] = category
-        fruit_dict[name_id]['short_descr'] = short_descr
-        fruit_dict[name_id]['img_url'] = img["src"]
+        veg_dict[name_id]['name'] = name.replace("Seed", "").replace(",", "").strip()
+        veg_dict[name_id]['category'] = category
+        veg_dict[name_id]['short_descr'] = short_descr
+        veg_dict[name_id]['img_url'] = img["src"]
 
 
         ## Grab the first set of dimensions from the product page
@@ -38,30 +38,48 @@ for filename in os.scandir(directory):
             attribute_label = items.text.strip()
             attribute_value = items.find_next("strong").text.strip()
 
-            fruit_dict[name_id][attribute_label] = attribute_value
+            veg_dict[name_id][attribute_label] = attribute_value
 
         ## Grab the 2nd set of dimensions from the product page
         growing_instructions = ["Before Planting: ","Planting:",
                                 "Watering:","Fertilizer:","Days to Maturity:",
-                                "Harvesting:","Tips:","AVG. Direct Seeding Rate:"] 
+                                "Harvesting:","Tips:","AVG. Direct Seeding Rate:",
+                                "Before Planting ","Planting",
+                                "Watering","Fertilizer","Days to Maturity",
+                                "Harvesting","Tips","AVG. Direct Seeding Rate"] 
 
         for blurb in growing_instructions:
             strong_items=soup.findAll("strong")
             for item in strong_items:
                 if item.text.strip() == blurb.strip():
-                    instruction_label = item.text.strip()
+                    instruction_label_base_1 = item.text.strip()
+                    instruction_label_base_2 = instruction_label_base_1.replace(" ", "_")
+                    instruction_label_base_3 = re.findall("\w", instruction_label_base_2)
+                    instruction_label = "".join(instruction_label_base_3).lower()
                     instruction_value = item.next_sibling.strip()
-                    fruit_dict[name_id][instruction_label] = instruction_value
+                    veg_dict[name_id][instruction_label] = instruction_value
 
             ## Can't figure out why this stopped working... 
             # blurb_data = soup.find("strong", text=blurb).next_sibling
             # instruction_label = blurb
             # instruction_value = blurb_data.strip()
-            # fruit_dict[name_id][instruction_label] = instruction_value
+            # veg_dict[name_id][instruction_label] = instruction_value
+
+        cats = soup.find_all("li", {"class": "breadcrumb-item"})
+
+        cat_counter = 1
+        cats_list = []
+        for cat in cats:
+            if cat.text.strip() not in cats_list:
+                # print(f"{cat_counter} {cat.text.strip()}")
+                cats_list.append(cat.text.strip()) 
+                veg_dict[name_id][f"cat_{cat_counter}"] = cat.text.strip()
+                cat_counter+=1
+
         product_id_counter += 1
 
 print(" **** THE DATA IS DONE ****")
 
-# print(fruit_dict)
-with open('/home/hackbright/src/project/beautifulsoup/bs_fruit/fruit_data.json', 'w') as fp:
-    json.dump(fruit_dict, fp,  indent=4)
+# print(veg_dict)
+with open('/home/hackbright/src/project/data/fruit_data.json', 'w') as fp:
+    json.dump(veg_dict, fp,  indent=4)

@@ -22,12 +22,12 @@ for filename in os.scandir(directory):
         print("#" + str(product_id_counter) + " " + name_id + " -> " + filename.path)
 
         ##  Grab the name of the product + key info
-        name = soup.find("h1", {"class": "product-name"}).text.strip().replace("Seeds", "")
+        name = soup.find("h1", {"class": "product-name"}).text.strip().replace(",", "").strip().replace("Seeds", "")
         category = soup.find("p", {"class": "product-category"}).text.strip()
         short_descr = soup.find("div", {"class": "col-12 read-more__container"}).text.strip()
         img = soup.find(itemprop="image")
 
-        veg_dict[name_id]['name'] = name.replace("Seed", "").strip()
+        veg_dict[name_id]['name'] = name.replace("Seed", "").replace(",", "").strip()
         veg_dict[name_id]['category'] = category
         veg_dict[name_id]['short_descr'] = short_descr
         veg_dict[name_id]['img_url'] = img["src"]
@@ -43,13 +43,19 @@ for filename in os.scandir(directory):
         ## Grab the 2nd set of dimensions from the product page
         growing_instructions = ["Before Planting: ","Planting:",
                                 "Watering:","Fertilizer:","Days to Maturity:",
-                                "Harvesting:","Tips:","AVG. Direct Seeding Rate:"] 
+                                "Harvesting:","Tips:","AVG. Direct Seeding Rate:",
+                                "Before Planting ","Planting",
+                                "Watering","Fertilizer","Days to Maturity",
+                                "Harvesting","Tips","AVG. Direct Seeding Rate"] 
 
         for blurb in growing_instructions:
             strong_items=soup.findAll("strong")
             for item in strong_items:
                 if item.text.strip() == blurb.strip():
-                    instruction_label = item.text.strip()
+                    instruction_label_base_1 = item.text.strip()
+                    instruction_label_base_2 = instruction_label_base_1.replace(" ", "_")
+                    instruction_label_base_3 = re.findall("\w", instruction_label_base_2)
+                    instruction_label = "".join(instruction_label_base_3).lower()
                     instruction_value = item.next_sibling.strip()
                     veg_dict[name_id][instruction_label] = instruction_value
 
