@@ -145,7 +145,7 @@ def process_login():
 
     return redirect("/")
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout", methods=["POST", "GET"])
 def process_logout():
     """Process user logout."""
    
@@ -203,11 +203,33 @@ def all_gantts():
 
     return render_template("user_gantts.html")
 
-@app.route("/user_gantt/<gantt_id>", )
-def gantt_detail():
+@app.route("/user_gantt/<gantt_id>")
+def show_existing_gantt_detail():
+    """Shows specific gantt chart"""
+    
+    is_new = False
+
+    return render_template("user_gantt_details.html",is_new=is_new)
+
+
+
+@app.route("/user_gantt_details", )
+def show_dummy_gantt_detail():
     """Shows specific gantt chart"""
 
-    return render_template("user_gantt_details.html")
+    is_new = False
+
+    return render_template("user_gantt_details.html",is_new=is_new)
+
+
+@app.route("/user_gantt_new", )
+def show_new_gantt_detail():
+    """Shows specific gantt chart"""
+
+    is_new = True
+
+    return render_template("user_gantt_details.html", is_new=is_new)
+
 
 #################################################
 #               *** PLOTS ***                   #
