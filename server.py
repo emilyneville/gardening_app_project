@@ -119,13 +119,14 @@ def show_user():
     page = request.args.get('page', 1, type=int)
     # plants = Plant.query.paginate(page=page, per_page=24)
     plant_favs = crud.get_favorites_by_user(user.user_id).paginate(page=page, per_page=10)
+    gantts = crud.get_gantts_by_user_id(user.user_id)
 
 
     if logged_in_email is None:
         flash("You must log in to view profile info.")
         return redirect("/")
     else:
-        return render_template("user_details.html", user=user, plant_favs=plant_favs)
+        return render_template("user_details.html", user=user, plant_favs=plant_favs, gantts=gantts)
 
 
 @app.route("/login", methods=["POST"])
@@ -138,6 +139,8 @@ def process_login():
     user = crud.get_user_by_email(email)
     if not user or user.password != password:
         flash("The email or password you entered was incorrect.")
+
+
     else:
         # Log in user by storing the user's email in session
         session["user_email"] = user.email
@@ -200,16 +203,32 @@ def remove_favorite():
 def all_gantts():
     """Landing page for gantt chart creator / Garden Schedule"""
 
+    logged_in_email = session.get("user_email")
+    if logged_in_email is None:
+        gantts=None
+        flash("You must log in to use the schedule maker.")
+        return redirect("/")
+    else:
+        user = crud.get_user_by_email(logged_in_email)
+        gantts = crud.get_gantts_by_user_id(user.user_id)
+        gantt_check = crud.get_gantts_by_user_id(user.user_id).first()
+        for gantt in gantts:
+            print(gantt.gantt_name)
 
-    return render_template("user_gantts.html")
+    return render_template("user_gantts.html", gantts=gantts, gantt_check=gantt_check)
 
 @app.route("/user_gantt/<gantt_id>")
-def show_existing_gantt_detail():
+def show_existing_gantt_detail(gantt_id):
     """Shows specific gantt chart"""
-    
     is_new = False
 
-    return render_template("user_gantt_details.html",is_new=is_new)
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    plants = crud.get_plants_by_gantt_id(gantt_id)
+    for plant in plants:
+        print(plant)
+
+    return render_template("user_gantt_details.html",is_new=is_new, plants=plants)
 
 
 

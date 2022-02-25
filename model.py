@@ -146,7 +146,7 @@ class UserGanttPlant(db.Model):
     user_gantt = db.relationship("UserGantt", backref="user_gantt_plants")
 
     def __repr__(self):
-        return f"<Favorite favorite_plant_id={self.favorite_plant_id}>"
+        return f"<UGP user_gantt_plant_id={self.user_gantt_plant_id}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///plants", echo=True):

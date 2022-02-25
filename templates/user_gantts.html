@@ -4,12 +4,35 @@
 {% block body %}
   <h1>Garden Schedule</h1>
   <p class="lead">Create a new garden schedule or view previous ones!</p>
-  <p class="lead">
-    <a class="btn btn-lg btn-primary" href="/user_gantt_details" role="button">Sample Garden Schedule &raquo; </a>
 
-  </p>
-  <p class="lead">
-    <a class="btn btn-lg btn-secondary" href="/user_gantt_new" role="button">Create New Schedule &raquo; </a>
+  {% if gantt_check != None %}
+  <div>
+    <h5>Saved Garden Schedules</h5> <br>
+    {% for gantt in gantts %}
+    <p>
+    <a class="btn btn-lg btn-success" href="/user_gantt/{{gantt.user_gantt_id}}" role="button">{{ gantt.gantt_name }} &raquo; </a>
+    </p>
+    {% endfor %}
 
-  </p>
+    <p class="lead">
+      <a class="btn btn-lg btn-secondary" href="/user_gantt_new" role="button">Create New Schedule &raquo; </a>
+  
+    </p>
+    {% else %}
+    <p class="lead">
+      <a class="btn btn-lg btn-secondary" href="/user_gantt_new" role="button">Create New Schedule &raquo; </a>
+  
+    </p>
+    <p class="lead">
+      <a class="btn btn-lg btn-primary" href="/user_gantt_details" role="button">Sample Garden Schedule &raquo; </a>
+  
+    </p>
+
+
+  </div>
+  {% endif %}
+  
+
+  
+
 {% endblock %}

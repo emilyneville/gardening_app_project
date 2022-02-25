@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Plant, PlantFavorite, connect_to_db
+from model import db, User, Plant, PlantFavorite, UserGantt, UserGanttPlant, connect_to_db
 from datetime import datetime
 
 

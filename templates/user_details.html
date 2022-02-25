@@ -69,7 +69,12 @@
 
     
         <div class="col-6">
-            <h5>Saved Garden Schedules</h5> 
+            <h5>Saved Garden Schedules</h5> <br>
+            {% for gantt in gantts %}
+            <p>
+            <a class="btn btn-success" href="/user_gantt/{{gantt.user_gantt_id}}" role="button">{{ gantt.gantt_name }} &raquo; </a>
+            </p>
+          {% endfor %}
         </div>
         
         
