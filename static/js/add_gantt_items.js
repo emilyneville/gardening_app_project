@@ -1,4 +1,4 @@
-let gantt_counter = 1;
+let gantt_counter = 0;
 
 let data_array = [
   [
@@ -80,7 +80,10 @@ wrapper.addEventListener("click", (evt) => {
   // evt.target.id is the ID of the object
   let btnClicked = evt.target;
   console.log(btnClicked.parentElement);
+  console.log(btnClicked.parentElement.id);
+  data_array = data_array.filter((plant) => plant[0] !== btnClicked.parentElement.id);
   btnClicked.parentElement.remove();
+  drawChart();
 });
 
 google.charts.load("current", { packages: ["gantt"] });

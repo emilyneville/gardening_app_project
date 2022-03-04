@@ -27,10 +27,9 @@ block head %}
 <div>
   <label for="plant-names">Plants</label>
   <select name="plant_name" class="form-control" id="plant-names">
-    <option value="Asparagus">Asparagus</option>
-    <option value="Broccoli">Broccoli</option>
-    <option value="Garlic">Garlic</option>
-    <option value="Mushroom">Mushroom</option>
+      {% for plant in plants %}
+      <option value="{{ plant.plant.name }}">{{ plant.plant.name }}</option>
+      {% endfor %}
   </select>
 </div>
 
