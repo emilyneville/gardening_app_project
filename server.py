@@ -221,29 +221,30 @@ def all_gantts():
 def show_existing_gantt_detail(gantt_id):
     """Shows specific gantt chart"""
     is_new = False
-
+    gantt = crud.get_gantt_by_id(gantt_id)
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
     plants = crud.get_plants_by_gantt_id(gantt_id)
     plant_favs = crud.get_favorites_by_user(user.user_id)
-    print(plant_favs)
-    for plant in plants:
-        print("**********************************************************************")
-        print(f"Name: {plant.plant.name}, Category: {plant.plant.category}, Days to Maturity:{plant.plant.days_to_maturity}")
-        print("**********************************************************************")
-
-    return render_template("user_gantt_details.html",is_new=is_new, plants=plants)
 
 
-@app.route("/user_gantt/<gantt_id>.json")
+    # print(plant_favs)
+    # for plant in plants:
+    #     print("**********************************************************************")
+    #     print(f"Name: {plant.plant.name}, Category: {plant.plant.category}, Days to Maturity:{plant.plant.days_to_maturity}")
+    #     print("**********************************************************************")
+
+    return render_template("user_gantt_details.html",is_new=is_new, plants=plants, gantt=gantt, plant_favs=plant_favs)
+
+
+@app.route("/api/gantt/<gantt_id>.json")
 def get_json_gantt_detail(gantt_id):
     """Shows specific gantt chart"""
-    is_new = False
 
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
     plants = crud.get_plants_by_gantt_id(gantt_id)
-    plant_favs = crud.get_favorites_by_user(user.user_id)
+    # plant_favs = crud.get_favorites_by_user(user.user_id)
    
     ##toDO -- add in functionality for single query call
     user_gantt_plants_export = {}
@@ -254,6 +255,10 @@ def get_json_gantt_detail(gantt_id):
         user_gantt_plants_export[plant.plant.name]['name'] = plant.plant.name
         user_gantt_plants_export[plant.plant.name]['category']= plant.plant.category
         user_gantt_plants_export[plant.plant.name]['days_to_maturity'] = plant.plant.days_to_maturity
+        user_gantt_plants_export[plant.plant.name]['display_name'] = plant.display_name
+        user_gantt_plants_export[plant.plant.name]['start_date'] = plant.start_date
+        user_gantt_plants_export[plant.plant.name]['end_date'] = plant.end_date
+        
 
     return jsonify(user_gantt_plants_export)
 

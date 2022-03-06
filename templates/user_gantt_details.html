@@ -1,6 +1,5 @@
 {% extends 'base.html' %} {% block title %}Garden Schedule{% endblock %} {%
 block head %}
-<title>W3.CSS</title>
 <link rel="preconnect" href="//fonts.googleapis.com" crossorigin="" />
 <link
   rel="stylesheet"
@@ -11,25 +10,54 @@ block head %}
   src="https://www.gstatic.com/charts/loader.js"
 ></script>
 
-
 {% endblock %} {% block body %}
-<h1>Sample Gantt</h1>
-<div id="chart_div"></div>
+<h1 id="{{ gantt.user_gantt_id }}">{{ gantt.gantt_name }}</h1>
+<p><div id="chart_div"></div></p>
+
+
+<p>
+  <button
+    class="btn btn-outline-primary"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#collapseContent"
+    aria-expanded="false"
+    aria-controls="collapseContent"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-toggle-on"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10H5zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"
+      />
+    </svg>
+    View Text-Based Schedule
+  </button>
+</p>
+<div class="collapse" id="collapseContent">
+  <div class="card card-body">
+    <div id="wrapper">
+      <ul id="list"></ul>
+    </div>
+  </div>
+</div>
+
 
 <!-------------- ADDING LINE ITEMS FOR GANTT ---------------->
 
 <h2>Add Plants to Schedule</h2>
 
-<div id="wrapper">
-  <ul id="list"></ul>
-</div>
-
 <div>
   <label for="plant-names">Plants</label>
   <select name="plant_name" class="form-control" id="plant-names">
-      {% for plant in plants %}
-      <option value="{{ plant.plant.name }}">{{ plant.plant.name }}</option>
-      {% endfor %}
+    {% for plant in plant_favs %}
+    <option value="{{ plant.plant.name }}">{{ plant.plant.name }}</option>
+    {% endfor %}
   </select>
 </div>
 
@@ -53,20 +81,22 @@ block head %}
     required
   />
 </div>
+<p>
+  <input
+    onclick="addItem()"
+    type="submit"
+    class="btn btn-primary mt-2"
+    value="Add Plant"
+  />
+</p>
 
-<input
-  onclick="addItem()"
-  type="submit"
-  class="btn btn-primary mt-2"
-  value="Add Plant"
-/>
 
- 
 {% if is_new == True %}
 
-<p><button onclick="geekConfirm()" class="btn btn-secondary mt-2">
-  Create New Schedule
-</button>
+<p>
+  <button onclick="geekConfirm()" class="btn btn-secondary mt-2">
+    Create New Schedule
+  </button>
 </p>
 
 {% endif %}
@@ -76,9 +106,6 @@ block head %}
   Click here for Confirm box
 </button>
 <p id="geek"></p> -->
-
-
-
 
 <script src="/static/js/add_gantt_items.js"></script>
 

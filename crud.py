@@ -173,6 +173,8 @@ def get_plants_by_gantt_id(user_gantt_id):
     """Return all the Plants associated with a given Gantt Chart"""
     return UserGanttPlant.query.filter_by(user_gantt_id=user_gantt_id)
 
+def get_gantt_by_id(gantt_id):
+    return UserGantt.query.get(gantt_id)
 
 
 ##################
