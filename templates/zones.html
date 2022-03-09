@@ -1,0 +1,205 @@
+{% extends 'base.html' %} {% block title %}Zone Information{% endblock %} {%
+block body %}
+<div class="jumbotron">
+  <h1 class="display-4">Find your zone!</h1>
+
+  <hr class="my-4" />
+  <h3>Plant Hardiness Zone Map (Continental US)</h3>
+  <h5>What are hardiness zones...?</h5>
+  <p>
+    Hardiness zones are geographical areas divided up by climate that can be
+    used to determine where different plants will grow best. This information will allow you to better understand the optimal time to plant and harvest your crops.<p>Find where you are
+    on the map, and toggle the respective zone button below!</p>
+  </p>
+  <div>
+    <p></p>
+    <img
+      class="rounded mx-auto d-block"
+      width="75%"
+      height="75%"
+      src="https://www.ufseeds.com/on/demandware.static/-/Sites-UrbanFarmer-Library/default/dwabd4f8cf/Garden-Zones.jpg"
+    />
+    <p>Source: UFSeeds.com</p>
+  </div>
+
+  <hr class="my-4" />
+</div>
+<p>
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#collapse3"
+    aria-expanded="false"
+    aria-controls="collapse3"
+  >
+    Zone 3
+  </button>
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#collapse4"
+    aria-expanded="false"
+    aria-controls="collapse4"
+  >
+    Zone 4
+  </button>
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#collapse5"
+    aria-expanded="false"
+    aria-controls="collapse5"
+  >
+    Zone 5
+  </button>
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#collapse6"
+    aria-expanded="false"
+    aria-controls="collapse6"
+  >
+    Zone 6
+  </button>
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#collapse7"
+    aria-expanded="false"
+    aria-controls="collapse7"
+  >
+    Zone 7
+  </button>
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#collapse8"
+    aria-expanded="false"
+    aria-controls="collapse8"
+  >
+    Zone 8
+  </button>
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#collapse9"
+    aria-expanded="false"
+    aria-controls="collapse9"
+  >
+    Zone 9
+  </button>
+</p>
+
+<div class="collapse" id="collapse3">
+  <div class="card card-body">this is content for zone 3 card</div>
+</div>
+<div class="collapse" id="collapse4">
+  <div class="card card-body">this is content for zone 4 card</div>
+</div>
+<div class="collapse" id="collapse5">
+  <div class="card card-body">this is content for zone 5 card</div>
+</div>
+<div class="collapse" id="collapse6">
+  <div class="card card-body">this is content for zone 6 card</div>
+</div>
+<div class="collapse" id="collapse7">
+  <div class="card card-body">
+    <h5>Zone 7</h5>
+    <p>
+      Zone 7 has medium length growing season. Most vegetable varieties will have no problem maturing before your first frost date. 
+      With a last frost date of April 15th and first frost date of November 15th. This gives you 7 months of gardening time! 
+      These dates will vary a week or two so it’s important to watch the weather before planting. Annual minimum temperature for zone 7 is 5ºF.
+
+    </p>
+    <table class="table rounded mx-auto d-block" style="width: auto">
+      <thead>
+        <tr>
+          <th scope="col">Est. Last <br />Frost Date</th>
+          <th scope="col">Est. First <br />Frost Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>April 15</td>
+          <td>November 15</td>
+        </tr>
+      </tbody>
+    </table>
+    <img
+      class="rounded mx-auto d-block"
+      src="https://www.ufseeds.com/on/demandware.static/-/Sites-UrbanFarmer-Library/default/dw5c56ef6b/images/content/Planting-Zone-7.jpg"
+    />
+  </div>
+
+
+  </div>
+</div>
+<div class="collapse" id="collapse8" >
+  <div class="card card-body">
+    <h5>Zone 8</h5>
+    <p>
+      Zone 8 has a long growing season with hot summers. Most vegetable varieties 
+      will have no problem maturing before your first frost date. With
+      a last frost date of April 1st and first frost date of December 1st. These
+      dates will vary a week or two so it’s important to watch the weather
+      before planting. Annual minimum temperature for zone 8 is 15ºF.
+    </p>
+    <table class="table rounded mx-auto d-block" style="width: auto">
+      <thead>
+        <tr>
+          <th scope="col">Est. Last <br />Frost Date</th>
+          <th scope="col">Est. First <br />Frost Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>April 1</td>
+          <td>December 1</td>
+        </tr>
+      </tbody>
+    </table>
+    <img
+      class="rounded mx-auto d-block"
+      src="https://www.ufseeds.com/on/demandware.static/-/Sites-UrbanFarmer-Library/default/dw5c56ef6b/images/content/Planting-Zone-8.jpg"
+    />
+  </div>
+</div>
+<div class="collapse" id="collapse9">
+  <div class="card card-body">
+    <h5>Zone 9</h5>
+    <p> 
+      Zone 9 has a long growing season with hot summers. Most vegetable
+      varieties will have no problem maturing before your first frost date. With
+      a last frost date of March 1st and first frost date of December 15th.
+      These dates will vary a week or two so it’s important to watch the weather
+      before planting. Annual minimum temperature for zone 9 is 25ºF.
+    </p>
+    <table class="table rounded mx-auto d-block" style="width: auto">
+      <thead>
+        <tr>
+          <th scope="col">Est. Last <br />Frost Date</th>
+          <th scope="col">Est. First <br />Frost Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>March 1</td>
+          <td>December 15</td>
+        </tr>
+      </tbody>
+    </table>
+    <img
+      class="rounded mx-auto d-block"
+      src="https://www.ufseeds.com/on/demandware.static/-/Sites-UrbanFarmer-Library/default/dw5c56ef6b/images/content/Planting-Zone-9.jpg"
+    />
+  </div>
+</div>
+
+{% endblock %}

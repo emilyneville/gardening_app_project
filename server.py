@@ -284,6 +284,16 @@ def show_new_gantt_detail():
 
 
 #################################################
+#               *** ZONES ***                   #
+#################################################
+
+@app.route("/zone_info")
+def show_zone_info():
+    """Shows page for zone information"""
+
+    return render_template("zones.html")
+
+#################################################
 #               *** PLOTS ***                   #
 #################################################
 
