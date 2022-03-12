@@ -1,4 +1,6 @@
-TRUNCATE TABLE user_gantts;
+-- TRUNCATE TABLE user_gantts_plants;
+
+-- TRUNCATE TABLE user_gantts;
 
 INSERT INTO user_gantts(user_id, gantt_name, created_date, last_modified_date)
 VALUES (1, 'emilys test gantt', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
@@ -6,7 +8,6 @@ VALUES (1, 'emilys test gantt', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO user_gantts(user_id, gantt_name, created_date, last_modified_date)
 VALUES (1, 'the other test', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-TRUNCATE TABLE user_gantt_plants
 
 INSERT INTO user_gantt_plants(plant_id, user_gantt_id, display_name, start_date, end_date,created_date, last_modified_date) 
 VALUES (16, 1, 'sweet watermelon', DATE'2022-03-17', DATE'2022-07-20', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

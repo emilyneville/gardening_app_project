@@ -1,73 +1,74 @@
-{% extends 'base.html' %}
-{% block title %}RSG Home{% endblock %}
+{% extends 'base.html' %} {% block title %}RSG Home{% endblock %} {% block body
+%}
+<!-- Main content of page -->
 
-{% block body %}
-  <!-- Main content of page -->
-  
-    <div class="jumbotron">
-      <h1 class="display-4">🌱 Ready, Set, Grow! 🌱</h1>
+<div class="jumbotron">
+  <h1 class="display-4 text-center">Ready, Set, Grow!</h1>
 
-      <p class="lead">Welcome!!!</p>
+  <!-- <p class="lead">Welcome!!!</p> -->
 
-      <hr class="my-4" />
-      <!-- (hr is horizontal rule, a thematic break) -->
+  <hr class="rounded">
+</div>
+<img
+  class="rounded mx-auto d-block"
+  width="50%"
+  height="50%"
+  src="/static/img/garden_harvest.jpeg"
+/>
+<hr class="rounded">
 
-     
-    </div>
-    <img
-      class="rounded mx-auto d-block"
-      width="90%"
-      height="90%"
-      src="/static/img/garden_harvest.jpeg"
-    />
-    <hr class="my-4" />
+{% if session.get('user_email') %}
+<div>
+  <h3 class="text-center">Let's get growing, {{ session['user_email'] }} !</h3>
+  <p></p>
+  <p class="text-center">
+    <a class="btn btn-lg btn-primary" href="/plants" role="button"
+      >Explore Plants &raquo;
+    </a>
+    <a class="btn btn-lg btn-primary" href="/user_gantts" role="button"
+      >View Garden Schedules &raquo;
+    </a>
+    <a class="btn btn-lg btn-primary" href="/user_info" role="button"
+      >Go To Your Profile &raquo;
+    </a>
+  </p>
+  <p class="text-center">
+    <a class="btn btn-lg btn-secondary" href="/logout" role="button"
+      >Log Out &raquo;
+    </a>
+  </p>
+</div>
+{% else %}
 
-    {% if session.get('user_email') %}
-    <div>
-    <h3>Let's get growing, {{ session['user_email'] }} !</h3>
-    <p></p>
-    <p class="lead">
-      <a class="btn btn-lg btn-primary" href="/plants" role="button">Explore Plants &raquo; </a>
-      <a class="btn btn-lg btn-primary" href="/user_gantts" role="button">View Garden Schedules &raquo; </a>
-      <a class="btn btn-lg btn-primary" href="/user_info" role="button">Go To Your Profile &raquo; </a>
-    </p>
-    <a class="btn btn-lg btn-secondary" href="/logout" role="button">Log Out &raquo; </a>
-  </div>
-  {% else %}
+<div class="row text-center">
+  <div class="col-6 text-right">
     <h2>Create an Account</h2>
     <form action="/users" method="POST">
+      <p>Email <input type="text" name="email" /></p>
+
+      <p>Password <input type="password" name="password" /></p>
+
       <p>
-        Email <input type="text" name="email">
-      </p>
-  
-      <p>
-        Password <input type="password" name="password">
-      </p>
-  
-      <p>
-        <input type="submit">
+        <input type="submit" />
       </p>
     </form>
-  
+  </div>
+
+  <div class="col-6 text-right">
     <h2>Log In</h2>
     <form action="/login" method="POST">
+      <p>Email <input type="text" name="email" /></p>
+
+      <p>Password <input type="password" name="password" /></p>
+
       <p>
-        Email <input type="text" name="email">
-      </p>
-  
-      <p>
-        Password <input type="password" name="password">
-      </p>
-  
-      <p>
-        <input type="submit">
+        <input type="submit" />
       </p>
     </form>
-    <ul>
+    <!-- <ul>
       <li><a href="/users">View all users</a></li>
-    </ul>
-    {% endif %}
+    </ul> -->
+  </div>
+</div>
 
-
-
-{% endblock %}
+{% endif %} {% endblock %}

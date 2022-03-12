@@ -12,6 +12,13 @@ img {
   border-radius: 5px;
 }
 
+.logo {
+  border-radius: 5px;
+  margin-left: 10px;
+
+
+}
+
 /* stops the search list from having bullets */
 .search-list {
   list-style-type: none;
@@ -50,15 +57,19 @@ img {
 }
 
 hr.rounded {
-  border-top: 8px solid #0F9D58
-  ;
+  border-top: 4px solid #0F9D58;
   border-radius: 5px;
 }
 
-
-.btn-group-xs > .btn, .btn-xs {
-  padding: .25rem .4rem;
-  font-size: .875rem;
-  line-height: .5;
-  border-radius: .2rem;
+.btn-group-xs > .btn,
+.btn-xs {
+  padding: 0.25rem 0.4rem;
+  font-size: 0.875rem;
+  line-height: 0.5;
+  border-radius: 0.2rem;
+}
+.card {
+  margin: auto;
+  padding: 10px;
+  max-width: 90%;
 }

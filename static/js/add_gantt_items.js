@@ -2,21 +2,37 @@
 //initial data array for gantt
 let gantt_counter = 0;
 
-let data_array = [
-  [
-    "Plant Gantt ID",
-    "Plant Name",
-    "Plant SubCategory",
-    new Date(2022, 4, 1),
-    new Date(2022, 7, 1),
-    null,
-    null,
-    null,
-  ],
+let DATA_ARRAY = [
+  // [
+  //   "Plant Gantt ID",
+  //   "Plant Name",
+  //   "Plant SubCategory",
+  //   new Date(2022, 4, 1),
+  //   new Date(2022, 7, 1),
+  //   null,
+  //   null,
+  //   null,
+  // ],
 ];
 
+const OPTIONS = {
+  height: 400,
+  gantt: {
+    trackHeight: 30,
+    labelStyle: {
+      fontName: "Arial",
+    },
+  },
+  tooltip: {
+    isHtml: true,
+    textStyle: {
+      fontName: "Arial",
+    },
+  },
+};
+
 function drawChart() {
-  var data = new google.visualization.DataTable();
+  const data = new google.visualization.DataTable();
   data.addColumn("string", "Task ID");
   data.addColumn("string", "Task Name");
   data.addColumn("string", "Resource");
@@ -26,84 +42,72 @@ function drawChart() {
   data.addColumn("number", "Percent Complete");
   data.addColumn("string", "Dependencies");
 
-  data.addRows(data_array);
+  data.addRows(DATA_ARRAY);
 
-  var options = {
-    height: 400,
-    gantt: {
-      trackHeight: 30,
-      labelStyle: {
-        fontName: "Arial",
-      },
-    },
-    tooltip: {
-      isHtml: true,
-      textStyle: {
-        fontName: "Arial",
-      },
-    },
-  };
 
-  var chart = new google.visualization.Gantt(
+
+  const chart = new google.visualization.Gantt(
     document.getElementById("chart_div")
   );
 
-  chart.draw(data, options);
+  chart.draw(data, OPTIONS);
 }
 
 // Get previously stored data from gantt //
-let gantt_id = document.querySelector("h1").id;
+// let gantt_id = document.querySelector("h1").id;
+const gantt_id = $('#chart_div').data('gantt-id')
 console.log(`my gantt id is ${gantt_id}`);
 
-let current_gantt_data;
+let currentGanttData;
 
 fetch(`/api/gantt/${gantt_id}.json`)
   .then((response) => response.json())
-  .then((data) => (current_gantt_data = data))
+  .then((data) => (currentGanttData = data))
   .then(() => {
-    // console.log(current_gantt_data);
-    let data_array = [];
-    for (const [key, value] of Object.entries(current_gantt_data)) {
+    // console.log(currentGanttData);
+    for (const [key, value] of Object.entries(currentGanttData)) {
       // console.log(`${key}`);
       const a = document.getElementById("list");
-      let string_to_add = current_gantt_data[key]["name"].concat(
+      let string_to_add = currentGanttData[key]["name"].concat(
         // " | ",
-        // current_gantt_data[key]["category"] ?? "N/A",
+        // currentGanttData[key]["category"] ?? "N/A",
         // " | ",
-        // current_gantt_data[key]["days_to_maturity"] ?? "N/A",
+        // currentGanttData[key]["days_to_maturity"] ?? "N/A",
         " | ",
         "2022-05-01",
         " | ",
         "2022-07-01"
       );
-      // console.log(string_to_add);
       const li = document.createElement("li");
       li.setAttribute("class", "gantt-item");
-      li.setAttribute("id", current_gantt_data[key]["name"]);
+      li.setAttribute("id", currentGanttData[key]["name"]);
       li.appendChild(document.createTextNode(string_to_add));
       a.appendChild(li);
       document
-        .getElementById(current_gantt_data[key]["name"])
+        .getElementById(currentGanttData[key]["name"])
         .insertAdjacentHTML(
           "beforeend",
           `&nbsp; <button id='remove-item ${gantt_counter.toString()}' class='remove-item btn btn-outline-danger btn-xs'> X </button>`
         );
       
     }
-  loadExistingGantt();
+  loadExistingGantt(currentGanttData);
   });
 
+  // function loadExistingGantt(ganttItems) {
 function loadExistingGantt() {
-  data_array = [];
+  DATA_ARRAY = [];
   console.log("loading exiting gantt chart....");
   let ganttItems = document.querySelectorAll(".gantt-item");
   for (const item of ganttItems) {
+    // kill these lines since we have a json object fed int
     plant_string = item.textContent.replace(" X ", "") ;
-    // console.log(plant_string.split(" | ")[2]);
     console.log(item.textContent.replace(" X ", ""))
     let plant_name = plant_string.split(" | ")[0];
     let start_date = plant_string.split(" | ")[1];
     let end_date =  plant_string.split(" | ")[2];
+
+    //need to conver the json string date to a js date (dayjs)
     let data_to_add = [
       plant_name,
       plant_name,
@@ -122,8 +126,9 @@ function loadExistingGantt() {
       0,
       null,
     ];
-    data_array.push(data_to_add);
+    DATA_ARRAY.push(data_to_add);
   }
+  drawChart();
 }
 
 

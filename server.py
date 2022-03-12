@@ -258,6 +258,7 @@ def get_json_gantt_detail(gantt_id):
         user_gantt_plants_export[plant.plant.name]['display_name'] = plant.display_name
         user_gantt_plants_export[plant.plant.name]['start_date'] = plant.start_date
         user_gantt_plants_export[plant.plant.name]['end_date'] = plant.end_date
+        user_gantt_plants_export[plant.plant.name]['planting'] = plant.plant.planting
         
 
     return jsonify(user_gantt_plants_export)
@@ -265,13 +266,13 @@ def get_json_gantt_detail(gantt_id):
 
 
 
-@app.route("/user_gantt_details", )
-def show_dummy_gantt_detail():
-    """Shows specific gantt chart"""
+# @app.route("/user_gantt_details", )
+# def show_dummy_gantt_detail():
+#     """Shows specific gantt chart"""
 
-    is_new = False
+#     is_new = False
 
-    return render_template("user_gantt_details.html",is_new=is_new)
+#     return render_template("user_gantt_details.html",is_new=is_new)
 
 
 @app.route("/user_gantt_new", )
@@ -279,8 +280,11 @@ def show_new_gantt_detail():
     """Shows specific gantt chart"""
 
     is_new = True
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    plant_favs = crud.get_favorites_by_user(user.user_id)
 
-    return render_template("user_gantt_details.html", is_new=is_new)
+    return render_template("user_gantt_new.html", is_new=is_new, plant_favs=plant_favs)
 
 
 #################################################
