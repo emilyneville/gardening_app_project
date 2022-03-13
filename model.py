@@ -146,12 +146,13 @@ class UserGanttPlant(db.Model):
     user_gantt = db.relationship("UserGantt", backref="user_gantt_plants")
 
     def __repr__(self):
-        return f"<UGP user_gantt_plant_id={self.user_gantt_plant_id}>"
+        return f"<UGP user_gantt_plant_id={self.user_gantt_plant_id} {self.display_name}>>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///plants", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
-    flask_app.config["SQLALCHEMY_ECHO"] = echo
+    # flask_app.config["SQLALCHEMY_ECHO"] = echo
+    flask_app.config["SQLALCHEMY_ECHO"] = False
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.app = flask_app

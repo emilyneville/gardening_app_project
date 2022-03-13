@@ -227,13 +227,6 @@ def show_existing_gantt_detail(gantt_id):
     plants = crud.get_plants_by_gantt_id(gantt_id)
     plant_favs = crud.get_favorites_by_user(user.user_id)
 
-
-    # print(plant_favs)
-    # for plant in plants:
-    #     print("**********************************************************************")
-    #     print(f"Name: {plant.plant.name}, Category: {plant.plant.category}, Days to Maturity:{plant.plant.days_to_maturity}")
-    #     print("**********************************************************************")
-
     return render_template("user_gantt_details.html",is_new=is_new, plants=plants, gantt=gantt, plant_favs=plant_favs)
 
 
@@ -264,7 +257,33 @@ def get_json_gantt_detail(gantt_id):
     return jsonify(user_gantt_plants_export)
 
 
+@app.route("/submit-gantt-change", methods=["POST"])
+def submit_gantt_changes_json():
+    """Change an existing gantt chart's line items"""
+    gantt_id = request.json['gantt_id']
+    gantt_lines_req = request.json['line_items']
+    # print(gantt_lines_req)
+    
+    plants_to_delete = crud.delete_gantt_plants(gantt_id)
+    for deleted_plant in plants_to_delete:
+        deleted_plant = db.session.delete(deleted_plant)
 
+    gantt_lines = []
+    for line in gantt_lines_req:
+        gantt_line = []
+        gantt_line.append(Plant.query.filter(Plant.name==line[0]).first())
+        gantt_line.append(line[3])
+        gantt_line.append(line[4])
+        gantt_lines.append(gantt_line)
+        new_gantt_line = crud.create_user_gantt_plant(gantt_id, gantt_line[0].plant_id, gantt_line[0].name, gantt_line[1][0:10], gantt_line[2][0:10])
+        db.session.add(new_gantt_line)
+    # print(gantt_lines)
+    # new_gantt_lines = crud.rebuild_gantt_plants(gantt_id, gantt_lines)
+
+
+    db.session.commit()
+
+    return {"success": True, "status": "Changes have been saved!"}
 
 # @app.route("/user_gantt_details", )
 # def show_dummy_gantt_detail():

@@ -156,13 +156,23 @@ def create_user_gantt_plant(user_gantt_id, plant_id, display_name, start_date, e
     )
     return user_gantt_plant
 
+def rebuild_gantt_plants(user_gantt_id, list_of_plants):
+    """Add in several plants to a gantt at once"""
 
-def delete_gantt_plant(user_gantt_id, plant_id):
+    for sub_list in list_of_plants:
+        create_user_gantt_plant(user_gantt_id, sub_list[0].plant_id, sub_list[0].name, sub_list[1][0:10], sub_list[2][0:10])
+        print(f"attempted to add {sub_list[0].name} to gantt ID {user_gantt_id} ")
+
+    return print('plants have been added!')
+
+def delete_gantt_plants(user_gantt_id):
     """Delete a PlantFavorite with GanttID and PlantID."""
 
-    deleted_plant = UserGanttPlant.query.filter_by(user_gantt_id=user_gantt_id, plant_id=plant_id).first()
+    plants_to_delete = UserGanttPlant.query.filter_by(user_gantt_id=user_gantt_id).all()
     
-    return deleted_plant
+    return plants_to_delete
+
+
 
 
 def get_gantts_by_user_id(user_id):

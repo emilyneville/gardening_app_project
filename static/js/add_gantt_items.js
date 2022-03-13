@@ -44,8 +44,6 @@ function drawChart() {
 
   data.addRows(DATA_ARRAY);
 
-
-
   const chart = new google.visualization.Gantt(
     document.getElementById("chart_div")
   );
@@ -55,7 +53,7 @@ function drawChart() {
 
 // Get previously stored data from gantt //
 // let gantt_id = document.querySelector("h1").id;
-const gantt_id = $('#chart_div').data('gantt-id')
+const gantt_id = $("#chart_div").data("gantt-id");
 console.log(`my gantt id is ${gantt_id}`);
 
 let currentGanttData;
@@ -69,14 +67,18 @@ fetch(`/api/gantt/${gantt_id}.json`)
       // console.log(`${key}`);
       const a = document.getElementById("list");
       let string_to_add = currentGanttData[key]["name"].concat(
-        // " | ",
-        // currentGanttData[key]["category"] ?? "N/A",
-        // " | ",
-        // currentGanttData[key]["days_to_maturity"] ?? "N/A",
         " | ",
-        "2022-05-01",
+        currentGanttData[key]["category"] ?? "N/A",
         " | ",
-        "2022-07-01"
+        currentGanttData[key]["days_to_maturity"] ?? "N/A",
+        " | ",
+        dayjs(currentGanttData[key]["start_date"])
+          .add(7, "hour")
+          .format("YYYY-MM-DD"),
+        " | ",
+        dayjs(currentGanttData[key]["end_date"])
+          .add(7, "hour")
+          .format("YYYY-MM-DD")
       );
       const li = document.createElement("li");
       li.setAttribute("class", "gantt-item");
@@ -89,24 +91,23 @@ fetch(`/api/gantt/${gantt_id}.json`)
           "beforeend",
           `&nbsp; <button id='remove-item ${gantt_counter.toString()}' class='remove-item btn btn-outline-danger btn-xs'> X </button>`
         );
-      
     }
-  loadExistingGantt(currentGanttData);
+    console.log("loaded data from chart");
+    loadExistingGantt();
   });
 
-  // function loadExistingGantt(ganttItems) {
+// function loadExistingGantt(ganttItems) {
 function loadExistingGantt() {
   DATA_ARRAY = [];
   console.log("loading exiting gantt chart....");
   let ganttItems = document.querySelectorAll(".gantt-item");
   for (const item of ganttItems) {
     // kill these lines since we have a json object fed int
-    plant_string = item.textContent.replace(" X ", "") ;
-    console.log(item.textContent.replace(" X ", ""))
+    plant_string = item.textContent.replace(" X ", "");
+    console.log(item.textContent.replace(" X ", ""));
     let plant_name = plant_string.split(" | ")[0];
-    let start_date = plant_string.split(" | ")[1];
-    let end_date =  plant_string.split(" | ")[2];
-
+    let start_date = plant_string.split(" | ")[3];
+    let end_date = plant_string.split(" | ")[4];
     //need to conver the json string date to a js date (dayjs)
     let data_to_add = [
       plant_name,
@@ -127,10 +128,11 @@ function loadExistingGantt() {
       null,
     ];
     DATA_ARRAY.push(data_to_add);
-  }
-  drawChart();
-}
+    drawChart;
 
+  }
+  drawChart;
+}
 
 //Google chart
 google.charts.load("current", { packages: ["gantt"] });
@@ -176,11 +178,10 @@ function addItem() {
     0,
     null,
   ];
-  data_array.push(data_to_add);
-  console.log(data_array);
+  DATA_ARRAY.push(data_to_add);
+  console.log(DATA_ARRAY);
   drawChart();
   a.appendChild(li);
-  // document.getElementById(plant_name.value + gantt_counter.toString()).insertAdjacentHTML("beforeend", `&nbsp; <img id='remove-item ${gantt_counter.toString()}' src='/static/img/x-square.svg'/>`);
   document
     .getElementById(plant_name.value)
     .insertAdjacentHTML(
@@ -200,16 +201,34 @@ wrapper.addEventListener("click", (evt) => {
   let btnClicked = evt.target;
   console.log(btnClicked.parentElement);
   console.log(btnClicked.parentElement.id);
-  data_array = data_array.filter(
+  DATA_ARRAY = DATA_ARRAY.filter(
     (plant) => plant[0] !== btnClicked.parentElement.id
   );
   btnClicked.parentElement.remove();
   drawChart();
 });
 
-// function geekConfirm() {
-//   var x;
-//   if (confirm("Would you like to save this schedule?") == true) {
-//     window.location.replace("http://localhost:5000/user_gantt_details");
-//   }
-// }
+// SAVE CHANGES
+
+// make it listen to the "save changes" button
+const saveBtn = document.getElementById("save changes");
+saveBtn.addEventListener("click", (evt) => {
+  console.log("SAVE MY CHANGES!!!")
+  console.log(DATA_ARRAY)
+  console.log(`my gantt id is ${gantt_id}`);
+  const data_export = {gantt_id : gantt_id, line_items : DATA_ARRAY}
+   
+  
+  fetch("/submit-gantt-change", {
+      method: "POST",
+      body: JSON.stringify(data_export),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        alert(responseJson.status);
+      });
+});
+
