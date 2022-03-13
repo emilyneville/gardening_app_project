@@ -187,6 +187,10 @@ def get_gantt_by_id(gantt_id):
     return UserGantt.query.get(gantt_id)
 
 
+def get_gantt_by_name(name):
+    return UserGantt.query.filter_by(gantt_name=name).first()
+
+
 ##################
 ##### zones ######
 ##################

@@ -11,7 +11,24 @@ block head %}
 ></script>
 
 {% endblock %} {% block body %}
+
+
+
+
+
+
 <h1 id="name-field">New Garden Schedule</h1>
+
+
+<p>
+  <button onclick="nameYourSchedule()" class="btn btn-secondary mt-2">
+    Name your schedule!
+  </button>
+
+  <button onclick="createNewSchedule()" class="btn btn-secondary mt-2">
+    Create Schedule
+  </button>
+</p>
 <p><div id="chart_div"></div></p>
 
 
@@ -47,6 +64,9 @@ block head %}
   </div>
 </div>
 
+
+
+<!-------------- Name your gantt ---------------->
 
 <!-------------- ADDING LINE ITEMS FOR GANTT ---------------->
 
@@ -95,11 +115,7 @@ block head %}
 
 {% if is_new == True %}
 
-<p>
-  <button onclick="createNewConfirm()" class="btn btn-secondary mt-2">
-    Create Schedule
-  </button>
-</p>
+
 
 {% endif %}
 

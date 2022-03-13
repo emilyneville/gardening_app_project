@@ -1,7 +1,7 @@
 """Server for garden planner app"""
 
 from flask import Flask, render_template, request, flash, session, redirect, url_for, jsonify
-from model import connect_to_db, db, Plant
+from model import connect_to_db, db, Plant, UserGantt
 import crud
 
 from jinja2 import StrictUndefined
@@ -262,7 +262,6 @@ def submit_gantt_changes_json():
     """Change an existing gantt chart's line items"""
     gantt_id = request.json['gantt_id']
     gantt_lines_req = request.json['line_items']
-    # print(gantt_lines_req)
     
     plants_to_delete = crud.delete_gantt_plants(gantt_id)
     for deleted_plant in plants_to_delete:
@@ -277,22 +276,37 @@ def submit_gantt_changes_json():
         gantt_lines.append(gantt_line)
         new_gantt_line = crud.create_user_gantt_plant(gantt_id, gantt_line[0].plant_id, gantt_line[0].name, gantt_line[1][0:10], gantt_line[2][0:10])
         db.session.add(new_gantt_line)
-    # print(gantt_lines)
-    # new_gantt_lines = crud.rebuild_gantt_plants(gantt_id, gantt_lines)
-
-
     db.session.commit()
 
     return {"success": True, "status": "Changes have been saved!"}
 
-# @app.route("/user_gantt_details", )
-# def show_dummy_gantt_detail():
-#     """Shows specific gantt chart"""
+@app.route("/submit-new-gantt", methods=["POST"])
+def create_new_gantt_json():
+    """Creates a new Gantt ID, and Subsequent Gantt Items"""
+    logged_in_email = session.get("user_email")
+    user_id = int(crud.get_user_by_email(logged_in_email).user_id)
+    gantt_name = request.json['gantt_name']
+    gantt_lines_req = request.json['line_items']
 
-#     is_new = False
+    new_gantt = crud.create_user_gantt(user_id, gantt_name)
+    db.session.add(new_gantt)
+    db.session.commit()
 
-#     return render_template("user_gantt_details.html",is_new=is_new)
+    new_gantt_id = int(crud.get_gantt_by_name(gantt_name).user_gantt_id)
 
+    gantt_lines = []
+    for line in gantt_lines_req:
+        gantt_line = []
+        gantt_line.append(Plant.query.filter(Plant.name==line[0]).first())
+        gantt_line.append(line[3])
+        gantt_line.append(line[4])
+        gantt_lines.append(gantt_line)
+        new_gantt_line = crud.create_user_gantt_plant(new_gantt_id, gantt_line[0].plant_id, gantt_line[0].name, gantt_line[1][0:10], gantt_line[2][0:10])
+        db.session.add(new_gantt_line)
+    db.session.commit()
+
+    
+    return {"success": True, "status": "New Gantt Created!"}
 
 @app.route("/user_gantt_new", )
 def show_new_gantt_detail():
@@ -302,6 +316,7 @@ def show_new_gantt_detail():
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
     plant_favs = crud.get_favorites_by_user(user.user_id)
+
 
     return render_template("user_gantt_new.html", is_new=is_new, plant_favs=plant_favs)
 
