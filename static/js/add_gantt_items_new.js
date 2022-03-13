@@ -133,7 +133,6 @@ function nameYourSchedule() {
 }
 
 function createNewSchedule() {
-  // location.replace("https://http://localhost:5000/user_gantt/${gantt_id}")
 
   gantt_name = document.getElementById("name-field").innerHTML
   data_export = {gantt_name : gantt_name, line_items : DATA_ARRAY}
@@ -148,62 +147,8 @@ function createNewSchedule() {
     .then((response) => response.json())
     .then((responseJson) => {
       alert(responseJson.status);
+      location.replace("http://localhost:5000/user_gantts")
+
     });
 
   };
-  // get name: document.getElementById("name-field").innerHTML
-
-// // SAVE CHANGES
-
-// // make it listen to the "save changes" button
-// const saveBtn = document.getElementById("save changes");
-// saveBtn.addEventListener("click", (evt) => {
-//   console.log("SAVE MY CHANGES!!!")
-//   console.log(DATA_ARRAY)
-//   console.log(`my gantt id is ${gantt_id}`);
-//   const data_export = {gantt_id : gantt_id, line_items : DATA_ARRAY}
-
-//   fetch("/submit-gantt-change", {
-//       method: "POST",
-//       body: JSON.stringify(data_export),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     })
-//       .then((response) => response.json())
-//       .then((responseJson) => {
-//         alert(responseJson.status);
-//       });
-// });
-// // function loadExistingGantt(ganttItems) {
-//   function loadExistingGantt() {
-//     DATA_ARRAY = [];
-//     console.log("loading exiting gantt chart....");
-//     let ganttItems = document.querySelectorAll(".gantt-item");
-//     for (const item of ganttItems) {
-//       // kill these lines since we have a json object fed int
-//       plant_string = item.textContent.replace(" X ", "");
-//       console.log(item.textContent.replace(" X ", ""));
-//       let plant_name = plant_string.split(" | ")[0];
-//       let start_date = plant_string.split(" | ")[3];
-//       let end_date = plant_string.split(" | ")[4];
-//       //need to conver the json string date to a js date (dayjs)
-//       let data_to_add = [
-//         plant_name,
-//         plant_name,
-//         plant_name,
-//         new Date(
-//           parseInt(start_date.split("-")[0]),
-//           parseInt(start_date.split("-")[1]) - 1,
-//           parseInt(start_date.split("-")[2])
-//         ),
-//         new Date(
-//           parseInt(end_date.split("-")[0]),
-//           parseInt(end_date.split("-")[1]) - 1,
-//           parseInt(end_date.split("-")[2])
-//         ),
-//         null,
-//         0,
-//         null,
-//       ];
-//       DATA_ARRAY.push(data_to_add);
