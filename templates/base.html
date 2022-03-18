@@ -20,12 +20,13 @@
     <p class="flash-msg">{{ msg }}</p>
     {% endfor %}
     <!-- Static navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="main2"><div class="background">
+    <nav class="navbar navbar-expand-lg navbar-light my-nav">
       <img
         class="logo"
         width="60px"
         height="60px"
-        src="/static/img/logo_2.png"
+        src="/static/img/logo-white.png"
       />
       <button
         class="navbar-toggler"
@@ -57,26 +58,18 @@
             <a class="nav-link" href="/user_info">My Account</a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success me-2" type="submit">
-            Search
-          </button>
-        </form>
       </div>
     </nav>
+    <div class="container-fluid"> 
 
-    <div class="container">{% block body %}{% endblock %}</div>
+    {% block body %}{% endblock %}</div>
     {% block after_body %}{% endblock %}
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
       crossorigin="anonymous"
     ></script>
+  </div>
+  </div>
   </body>
 </html>

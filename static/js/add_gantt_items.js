@@ -128,7 +128,6 @@ function loadExistingGantt() {
       null,
     ];
     DATA_ARRAY.push(data_to_add);
-    drawChart;
 
   }
   drawChart;

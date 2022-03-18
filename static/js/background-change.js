@@ -1,0 +1,1 @@
+document.querySelector(".background").className = "background-alt";

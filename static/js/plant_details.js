@@ -22,7 +22,7 @@ document.querySelector("#favorite-button").addEventListener("click", (evt) => {
         } else {
           alert("You have added this plant to favorites!");
           document.getElementById("favorite-button").classList.remove('btn-primary');
-          document.getElementById("favorite-button").classList.add('btn-outline-danger');
+          document.getElementById("favorite-button").classList.add('btn-danger');
           loginBtn.innerHTML = "Remove Plant From Favorites";
           
         }
@@ -45,7 +45,7 @@ document.querySelector("#favorite-button").addEventListener("click", (evt) => {
           alert("You must log in to unfavorite a plant");
         } else {
           alert("You have removed this plant from favorites </3 ");
-          document.getElementById("favorite-button").classList.remove('btn-outline-danger');
+          document.getElementById("favorite-button").classList.remove('btn-danger');
           document.getElementById("favorite-button").classList.add('btn-primary');
           loginBtn.innerHTML = "Favorite This Plant!";
           

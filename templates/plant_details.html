@@ -9,7 +9,7 @@
 
 {% if  current_favorite == True %}
 <p>
-    <button id="favorite-button" class="btn btn-outline-danger btn-sm">Remove Plant From Favorites</button>
+    <button id="favorite-button" class="btn btn-danger btn-sm">Remove Plant From Favorites</button>
 </p>
 {% else %}
 <p>
@@ -58,4 +58,6 @@
   <div class="col-sm-4"><h6>Tips</h6> {{ plant.tips }}</div>
 </div>
 <script src="/static/js/plant_details.js"></script>
+<script src="/static/js/background-change.js"></script>
+
 {% endblock %}

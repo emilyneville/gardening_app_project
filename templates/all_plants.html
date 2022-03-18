@@ -2,6 +2,7 @@
 {% block title %}All Plants{% endblock %}
 
 {% block body %}
+
 <h1 class="display-4">Plant Explorer</h1>
 <hr class="rounded">
 
@@ -64,20 +65,27 @@
   </div>
   <div class="col-10">
 
-    <ul class="search-list">
+    <ul class="search-list ">
       {% for plant in plants.items %}
-        <li><p><table>
-          <tr>
-         <td class="col-xs-2"><center><img class="border" src="{{ plant.image_url }}" alt="{{ plant.name }}" width="100" height="100"></center></td>
-          <td class="col-md-10"><a href="/plant/{{ plant.plant_id }}">{{ plant.name.replace(", ", " ") }}</a><br><small class="text-muted">{{ plant.short_descr[:250] }}...</small></td>
-        </tr>
-        </table>
-      </p>
-      </li>
+        
+     <li><div class="card mb-3 d-flex p-2 plant-card" style="max-width: 850px;  max-height:206px; float: left;">
+        <div class="row g-0">
+          <div class="col-md-4 list-img">
+            <img src="{{ plant.image_url }}" alt="{{ plant.name }}" class="img-fluid rounded-start " width="100%" height="100%">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><a href="/plant/{{ plant.plant_id }}">{{ plant.name.replace(", ", " ") }}</a></h5>
+              <p class="card-text"><small>{{ plant.short_descr[:450] }}...</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li> 
       {% endfor %}
     </ul>
   <!-- Pagination Links-->
-  <div class="text-right">
+  <div class="page-links">
     <a href="{{ url_for('all_plants', page=plants.prev_num, keyword=keyword, sun=sun, color=color, life_cycle=life_cycle, category=category, sub_category=sub_category) }}"
        class="btn btn-outline-dark 
        {% if plants.page == 1 %}disabled{% endif %}">
@@ -108,11 +116,12 @@
        {% if plants.page == plants.pages %}disabled{% endif %}">
         &raquo;
     </a>
-  </div>
   <p class="text-right mt-3">
    Showing page {{ plants.page }} of {{ plants.pages }} (24 records per page)
   </p>
-  </div>
 </div>
 
+  </div>
+</div>
+<script src="/static/js/background-change.js"></script>
 {% endblock %}

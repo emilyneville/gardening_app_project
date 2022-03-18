@@ -49,7 +49,7 @@ def all_plants():
 
     if full_search.strip() == "":
         ##ToDO verify this isn't excluding any plants (thinking it might be)
-        plants = Plant.query.paginate(page=page, per_page=24) 
+        plants = Plant.query.paginate(page=page, per_page=10) 
     
     else:
         ##ToDo make filters apply only when they exist or are not "" 
@@ -59,7 +59,7 @@ def all_plants():
             Plant.sun.ilike(f'%{sun}%'),
             Plant.fruit_color.ilike(f'%{color}%'),
             Plant.life_cycle.ilike(f'%{life_cycle}%')
-            ).paginate(page=page, per_page=24) 
+            ).paginate(page=page, per_page=10)
     
     return render_template("all_plants.html", plants=plants, plant_category_options=plant_category_options,
             keyword=keyword, sun=sun, color=color, life_cycle=life_cycle, category=category, sub_category=sub_category)
@@ -118,7 +118,7 @@ def show_user():
 
     page = request.args.get('page', 1, type=int)
     # plants = Plant.query.paginate(page=page, per_page=24)
-    plant_favs = crud.get_favorites_by_user(user.user_id).paginate(page=page, per_page=10)
+    plant_favs = crud.get_favorites_by_user(user.user_id).paginate(page=page, per_page=5)
     gantts = crud.get_gantts_by_user_id(user.user_id)
 
 

@@ -1,74 +1,72 @@
 {% extends 'base.html' %} {% block title %}RSG Home{% endblock %} {% block body
 %}
-<!-- Main content of page -->
 
-<div class="jumbotron">
-  <h1 class="display-4 text-center">Ready, Set, Grow!</h1>
+  <!-- <hr class="rounded"> -->
 
-  <!-- <p class="lead">Welcome!!!</p> -->
-
-  <hr class="rounded">
-</div>
-<img
+  {% if session.get('user_email') %}
+  <div class="row align-items-center">
+  <div class="jumbotron homepage  welcome-header card">
+    <h1 class="display-4 card-header page-title">Ready, Set, Grow!</h1>
+  <div class="" id="welcome-user">
+    <p><h4 class="text-center">Let's get growing, {{ session['user_email'] }} !</h4></p>
+    <p class="text-center">
+      <a class="btn btn-primary" href="/plants" role="button"
+        >Explore Plants &raquo;
+      </a>
+      <a class="btn btn-primary" href="/user_gantts" role="button"
+        >View Garden Schedules &raquo;
+      </a>
+      <a class="btn btn-primary" href="/user_info" role="button">Go To Your Profile &raquo;
+      </a>
+    </p>
+    <p class="text-center">
+      <a class="btn btn-secondary" href="/logout" role="button">Log Out &raquo;
+      </a>
+    </p>
+  </div>
+  </div>
+  {% else %}
+  <div class="jumbotron homepage  welcome-header card">
+    <h1 class="display-4 card-header page-title">Ready, Set, Grow!</h1>
+  <div class="row text-center " id="user-login-prompt">
+    <div class="col-6 text-right lead ">
+      <h2 class="display-7">Create an Account</h2>
+      <form action="/users" method="POST">
+        <p>Email <input type="text" name="email" /></p>
+  
+        <p>Password <input type="password" name="password" /></p>
+  
+        <p>
+          <input type="submit" />
+        </p>
+      </form>
+    </div>
+  
+    <div class="col-6 text-right lead">
+      <h2 class="display-7">Log In</h2>
+      <form action="/login" method="POST">
+        <p>Email <input type="text" name="email" /></p>
+  
+        <p>Password <input type="password" name="password" /></p>
+  
+        <p>
+          <input type="submit" />
+        </p>
+      </form>
+      <!-- <ul>
+        <li><a href="/users">View all users</a></li>
+      </ul> -->
+    </div>
+  </div>
+  {% endif %}
+<!-- <img
   class="rounded mx-auto d-block"
   width="50%"
   height="50%"
   src="/static/img/garden_harvest.jpeg"
-/>
-<hr class="rounded">
-
-{% if session.get('user_email') %}
-<div>
-  <h3 class="text-center">Let's get growing, {{ session['user_email'] }} !</h3>
-  <p></p>
-  <p class="text-center">
-    <a class="btn btn-lg btn-primary" href="/plants" role="button"
-      >Explore Plants &raquo;
-    </a>
-    <a class="btn btn-lg btn-primary" href="/user_gantts" role="button"
-      >View Garden Schedules &raquo;
-    </a>
-    <a class="btn btn-lg btn-primary" href="/user_info" role="button"
-      >Go To Your Profile &raquo;
-    </a>
-  </p>
-  <p class="text-center">
-    <a class="btn btn-lg btn-secondary" href="/logout" role="button"
-      >Log Out &raquo;
-    </a>
-  </p>
-</div>
-{% else %}
-
-<div class="row text-center">
-  <div class="col-6 text-right">
-    <h2>Create an Account</h2>
-    <form action="/users" method="POST">
-      <p>Email <input type="text" name="email" /></p>
-
-      <p>Password <input type="password" name="password" /></p>
-
-      <p>
-        <input type="submit" />
-      </p>
-    </form>
-  </div>
-
-  <div class="col-6 text-right">
-    <h2>Log In</h2>
-    <form action="/login" method="POST">
-      <p>Email <input type="text" name="email" /></p>
-
-      <p>Password <input type="password" name="password" /></p>
-
-      <p>
-        <input type="submit" />
-      </p>
-    </form>
-    <!-- <ul>
-      <li><a href="/users">View all users</a></li>
-    </ul> -->
-  </div>
+/> -->
+<!-- <hr class="rounded"> -->
 </div>
 
-{% endif %} {% endblock %}
+
+ {% endblock %}

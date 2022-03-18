@@ -22,12 +22,54 @@ block head %}
   </svg>
   Save Changes
   </button></h1>
-<p><div data-gantt-id="{{ gantt.user_gantt_id }}" id="chart_div"></div></p>
+
+<!-------------- ADDING LINE ITEMS FOR GANTT ---------------->
+
+<h2>Add Plants to Schedule</h2>
+
+<div class="gantt-add-form">
+  <label for="plant-names">Plants</label>
+  <select name="plant_name" class="form-control" id="plant-names">
+    {% for plant in plant_favs %}
+    <option value="{{ plant.plant.name }}">{{ plant.plant.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="start-date">Start Date</label>
+  <input
+    type="date"
+    class="form-control"
+    name="plant-start"
+    id="start-date"
+    value="2022-02-15"
+    required
+  />
+  <label for="end-date">Harvest Date</label>
+  <input
+    type="date"
+    class="form-control"
+    name="plant-end"
+    id="end-date"
+    value="2022-05-31"
+    required
+  />
+<p>
+  <input
+    onclick="addItem()"
+    type="submit"
+    class="btn btn-primary mt-2"
+    value="Add Plant"
+  />
+</p>
+
+</div>
+
+<p><div data-gantt-id="{{ gantt.user_gantt_id }}" id="chart_div" class="card gantt-placeholder"></div></p>
 
 
 <p>
   <button
-    class="btn btn-outline-primary"
+    class="btn btn-primary"
     type="button"
     data-bs-toggle="collapse"
     data-bs-target="#collapseContent"
@@ -58,47 +100,6 @@ block head %}
 </div>
 
 
-<!-------------- ADDING LINE ITEMS FOR GANTT ---------------->
-
-<h2>Add Plants to Schedule</h2>
-
-<div>
-  <label for="plant-names">Plants</label>
-  <select name="plant_name" class="form-control" id="plant-names">
-    {% for plant in plant_favs %}
-    <option value="{{ plant.plant.name }}">{{ plant.plant.name }}</option>
-    {% endfor %}
-  </select>
-</div>
-
-<div>
-  <label for="start-date">Start Date</label>
-  <input
-    type="date"
-    class="form-control"
-    name="plant-start"
-    id="start-date"
-    value="2022-02-15"
-    required
-  />
-  <label for="end-date">Harvest Date</label>
-  <input
-    type="date"
-    class="form-control"
-    name="plant-end"
-    id="end-date"
-    value="2022-05-31"
-    required
-  />
-</div>
-<p>
-  <input
-    onclick="addItem()"
-    type="submit"
-    class="btn btn-primary mt-2"
-    value="Add Plant"
-  />
-</p>
 
 
 
@@ -120,5 +121,6 @@ block head %}
 <p id="geek"></p> -->
 
 <script src="/static/js/add_gantt_items.js"></script>
+<script src="/static/js/background-change.js"></script>
 
 {% endblock %}
