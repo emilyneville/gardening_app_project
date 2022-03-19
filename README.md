@@ -10,9 +10,9 @@ Ready, Set, Grow allows users to quickly search and view common plants for home 
 
 #### Tech Stack
 
-- Python3
+- Python
 - Flask
-- PostgresSQL
+- PostgreSQL
 - SQLAlchemy
 - Javascript
 - HTML
