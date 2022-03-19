@@ -14,6 +14,7 @@ Ready, Set, Grow allows users to quickly search and view common plants for home 
 - Flask
 - PostgreSQL
 - SQLAlchemy
+- Google Chart API
 - Javascript
 - HTML
 - CSS
