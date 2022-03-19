@@ -22,6 +22,63 @@ const OPTIONS = {
     labelStyle: {
       fontName: "Arial",
     },
+    palette: [
+      {
+        color: "#5b618aff",
+        dark: "#5b618aff",
+        light: "#5b618aff",
+      },
+      {
+        color: "#4a442dff",
+        dark: "#4a442dff",
+        light: "#4a442dff",
+      },
+      {
+        color: "#7ca982ff",
+        dark: "#7ca982ff",
+        light: "#7ca982ff",
+      },
+      {
+        color: "#93032eff",
+        dark: "#93032eff",
+        light: "#93032eff",
+      },
+      {
+        color: "#c2a83eff",
+        dark: "#c2a83eff",
+        light: "#c2a83eff",
+      },
+      {
+        color: "#a47b73",
+        dark: "#a47b73",
+        light: "#a47b73",
+      },
+      {
+        color: "#5a4a29",
+        dark: "#5a4a29",
+        light: "#5a4a29",
+      },
+      {
+        color: "#623918",
+        dark: "#623918",
+        light: "#623918",
+      },
+      {
+        color: "#737b20",
+        dark: "#737b20",
+        light: "#737b20",
+      },
+      {
+        color: "#736262",
+        dark: "#736262",
+        light: "#736262",
+      },
+      {
+        color: "#bdb46a",
+        dark: "#bdb46a",
+        light: "#bdb46a",
+      },
+    ],
   },
   tooltip: {
     isHtml: true,
@@ -128,7 +185,6 @@ function loadExistingGantt() {
       null,
     ];
     DATA_ARRAY.push(data_to_add);
-
   }
   drawChart;
 }
@@ -212,22 +268,20 @@ wrapper.addEventListener("click", (evt) => {
 // make it listen to the "save changes" button
 const saveBtn = document.getElementById("save changes");
 saveBtn.addEventListener("click", (evt) => {
-  console.log("SAVE MY CHANGES!!!")
-  console.log(DATA_ARRAY)
+  console.log("SAVE MY CHANGES!!!");
+  console.log(DATA_ARRAY);
   console.log(`my gantt id is ${gantt_id}`);
-  const data_export = {gantt_id : gantt_id, line_items : DATA_ARRAY}
-   
-  
-  fetch("/submit-gantt-change", {
-      method: "POST",
-      body: JSON.stringify(data_export),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        alert(responseJson.status);
-      });
-});
+  const data_export = { gantt_id: gantt_id, line_items: DATA_ARRAY };
 
+  fetch("/submit-gantt-change", {
+    method: "POST",
+    body: JSON.stringify(data_export),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      alert(responseJson.status);
+    });
+});

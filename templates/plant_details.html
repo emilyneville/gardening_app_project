@@ -19,7 +19,7 @@
 
 
 <div class="row">
-  <div class="col-6"> <p><img src="{{ plant.image_url }}"> </p>  </div>
+  <div class="col-6"> <p><img class="rounded zone-map" src="{{ plant.image_url }}"> </p>  </div>
   <div class="col-6">  
   <h4>Short Description:</h4>
     {{ plant.short_descr }} 
@@ -28,7 +28,7 @@
 <h4>Attributes</h4>
 <div class="row plant-attribute">
   <div class="col-sm-4"><h6>Botanical Name</h6> {{ plant.botanical_name }}</div>
-  <div class="col-sm-4"><h6>Fruit Color</h6> {{ plant.fruit_color }}</div>
+  <div class="col-sm-4"><h6>Plant Hardiness Zones</h6> {{ plant.zone_list }}</div>
   <div class="col-sm-4"><h6>Breed</h6>{{ plant.breed }}</div>
 </div>  
 <div class="row plant-attribute">

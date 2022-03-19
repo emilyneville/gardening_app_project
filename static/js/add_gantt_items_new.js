@@ -35,6 +35,63 @@ function drawChart() {
       labelStyle: {
         fontName: "Arial",
       },
+      palette: [
+        {
+          color: "#5b618aff",
+          dark: "#5b618aff",
+          light: "#5b618aff",
+        },
+        {
+          color: "#4a442dff",
+          dark: "#4a442dff",
+          light: "#4a442dff",
+        },
+        {
+          color: "#7ca982ff",
+          dark: "#7ca982ff",
+          light: "#7ca982ff",
+        },
+        {
+          color: "#93032eff",
+          dark: "#93032eff",
+          light: "#93032eff",
+        },
+        {
+          color: "#c2a83eff",
+          dark: "#c2a83eff",
+          light: "#c2a83eff",
+        },
+        {
+          color: "#a47b73",
+          dark: "#a47b73",
+          light: "#a47b73",
+        },
+        {
+          color: "#5a4a29",
+          dark: "#5a4a29",
+          light: "#5a4a29",
+        },
+        {
+          color: "#623918",
+          dark: "#623918",
+          light: "#623918",
+        },
+        {
+          color: "#737b20",
+          dark: "#737b20",
+          light: "#737b20",
+        },
+        {
+          color: "#736262",
+          dark: "#736262",
+          light: "#736262",
+        },
+        {
+          color: "#bdb46a",
+          dark: "#bdb46a",
+          light: "#bdb46a",
+        },
+      ],
     },
     tooltip: {
       isHtml: true,
@@ -133,9 +190,8 @@ function nameYourSchedule() {
 }
 
 function createNewSchedule() {
-
-  gantt_name = document.getElementById("name-field").innerHTML
-  data_export = {gantt_name : gantt_name, line_items : DATA_ARRAY}
+  gantt_name = document.getElementById("name-field").innerHTML;
+  data_export = { gantt_name: gantt_name, line_items: DATA_ARRAY };
 
   fetch("/submit-new-gantt", {
     method: "POST",
@@ -147,8 +203,6 @@ function createNewSchedule() {
     .then((response) => response.json())
     .then((responseJson) => {
       alert(responseJson.status);
-      location.replace("http://localhost:5000/user_gantts")
-
+      location.replace("http://localhost:5000/user_gantts");
     });
-
-  };
+}
